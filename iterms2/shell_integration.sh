@@ -13,8 +13,8 @@ send_iterms2_user_variable() {
 	#printf "1337;RemoteHost=%s@%s" "$USER" "$_iterm2_hostname"
 	#iterm2_end_osc
 
-	printf "\e]1337;SetUserVar=%s=%s\a" hostname $(echo -n ${_iterm2_hostname} | base64)
-	printf "\e]1337;SetUserVar=%s=%s\a" path $(echo -n $(pwd) | base64)
+	printf "\e]1337;SetUserVar=%s=%s\a" hostname $(echo -n ${_iterm2_hostname} | base64 -w0)
+	printf "\e]1337;SetUserVar=%s=%s\a" path $(echo -n $(pwd) | base64 -w0)
 }
 
 
