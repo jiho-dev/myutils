@@ -66,13 +66,21 @@ async def main(connection):
 
     async def runNewSessionMon():
         # Monitor new session
-        print("new session mon")        
         async with iterm2.NewSessionMonitor(connection) as mon:
             while True:
                 session_id = await mon.async_get()
                 SetKeyboardLanguage()
 
     #asyncio.create_task(runNewSessionMon())
+
+    async def runFocusMon():
+        async with iterm2.FocusMonitor(connection) as mon:
+            while True:
+                update = await mon.async_get_next_update()
+                if update.selected_tab_changed:
+                    SetKeyboardLanguage()
+
+    asyncio.create_task(runFocusMon())
 
     # Monitor the keyboard
     async with iterm2.KeystrokeMonitor(connection) as mon:
