@@ -40,6 +40,7 @@ async def main(connection):
         # install: https://github.com/laishulu/macism
         #macism com.apple.inputmethod.Korean.2SetKorean
         #macism com.apple.keylayout.US
+        #print("set input-source to US")
         os.system("macism com.apple.keylayout.US")
 
     async def keystroke_handler(keystroke):
@@ -48,11 +49,12 @@ async def main(connection):
             SetKeyboardLanguage()
             return
         elif key != iterm2.Keycode.RETURN:
+            #print("press other key: %s" % key)
             return
 
         await ReConnectSession()
 
-    async def runMon():
+    async def runSessionTerminateMon():
         # Monitor termination of session
         async with iterm2.SessionTerminationMonitor(connection) as mon:
             while True:
@@ -60,7 +62,25 @@ async def main(connection):
                 sid = session_id
                 closedSess.append(sid)
 
-    asyncio.create_task(runMon())
+    asyncio.create_task(runSessionTerminateMon())
+
+    async def runNewSessionMon():
+        # Monitor new session
+        async with iterm2.NewSessionMonitor(connection) as mon:
+            while True:
+                session_id = await mon.async_get()
+                SetKeyboardLanguage()
+
+    #asyncio.create_task(runNewSessionMon())
+
+    async def runFocusMon():
+        async with iterm2.FocusMonitor(connection) as mon:
+            while True:
+                update = await mon.async_get_next_update()
+                if update.selected_tab_changed:
+                    SetKeyboardLanguage()
+
+    asyncio.create_task(runFocusMon())
 
     # Monitor the keyboard
     async with iterm2.KeystrokeMonitor(connection) as mon:
