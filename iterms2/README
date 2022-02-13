@@ -2,11 +2,11 @@ item2 script
 
 https://iterm2.com/python-api/tutorial/running.html
 
-path:  /Users/jiho.jung/Library/Application Support/iTerm2/Scripts/AutoLaunch
+path:  /Users/${USERNAME}/Library/Application Support/iTerm2/Scripts/AutoLaunch
 
 my scripts
-	- iterms2-close-session-mon.py 
-	- iterms2-hotkey.py
+ - iterms2-close-session-mon.py 
+ - iterms2-hotkey.py
 
 map hot key:
  -. preferences > profiles > keys > key binds > 
@@ -14,7 +14,7 @@ map hot key:
 
 test :
  scripts > manage > console
-
+ 
 
 	
 
