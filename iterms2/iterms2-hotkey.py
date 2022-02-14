@@ -98,9 +98,13 @@ async def main(connection):
             user_remote_hostname = await cur_sess.async_get_variable(name="user.remote_hostname")
 
             cmd = None
-            if user_remote_hostname is not None:
+            #if isNotBlank(user_remote_hostname):
+            if user_remote_hostname:
+                print("user.remote_hostname is not None: [%s] " % user_remote_hostname)
                 cmd = cur_profile.command.split()[0]
                 cmd = cmd + " " + user_remote_hostname
+            else:
+                print("user.remote_hostname is None: [%s] " % user_remote_hostname)
 
             return cur_tab, cur_sess, cur_profile.name, cmd
 
@@ -109,7 +113,7 @@ async def main(connection):
 
         return None, None, None, None
 
-
+    # command를 설정해서 서버에 자동 접속하게 하는 기능은 버그 사용 중
     @iterm2.RPC
     async def duplicate_tab():
 
@@ -123,11 +127,10 @@ async def main(connection):
         app = await iterm2.async_get_app(connection)
         cwin = app.current_window
         tabs = list(cwin.tabs)
-        cur_tab_idx = tabs.index(cur_tab)
+        cur_tab_idx = tabs.index(cur_tab)단
 
-        new_tab = await cwin.async_create_tab(profile=cur_profile_name,
-                                              command=cmd,
-                                              index=cur_tab_idx + 1)
+        #new_tab = await cwin.async_create_tab(profile=cur_profile_name,command=cmd, index=cur_tab_idx + 1)
+        new_tab = await cwin.async_create_tab(profile=cur_profile_name, index=cur_tab_idx + 1)
         new_sess = new_tab.current_session
 
         await new_tab.async_activate()
@@ -145,7 +148,8 @@ async def main(connection):
             return
 
         print("Duplicate the Tab in the new window with Profile: %s, cmd:%s " % (cur_profile_name, cmd))
-        new_win = await iterm2.Window.async_create(connection=connection, command=cmd, profile=cur_profile_name)
+        #new_win = await iterm2.Window.async_create(connection=connection, command=cmd, profile=cur_profile_name)
+        new_win = await iterm2.Window.async_create(connection=connection, profile=cur_profile_name)
         new_tab = new_win.current_tab
         await new_tab.async_activate()
         new_sess = new_tab.current_session
@@ -163,11 +167,12 @@ async def main(connection):
             return
 
         print("VSplit the Tab with Profile: %s, cmd:%s" % (cur_profile_name, cmd))
-        change = iterm2.LocalWriteOnlyProfile()
-        change.set_command(cmd)
-        change.set_use_custom_command("Yes")
+        #change = iterm2.LocalWriteOnlyProfile()
+        #change.set_command(cmd)
+        #change.set_use_custom_command("Yes")
 
-        new_sess = await cur_sess.async_split_pane(vertical=True, profile=cur_profile_name, profile_customizations=change)
+        #new_sess = await cur_sess.async_split_pane(vertical=True, profile=cur_profile_name, profile_customizations=change)
+        new_sess = await cur_sess.async_split_pane(vertical=True, profile=cur_profile_name)
         await new_sess.async_activate()
 
         await changeWorkingDirectory(cur_profile_name, cur_sess, new_sess)
@@ -182,11 +187,12 @@ async def main(connection):
             return
 
         print("HSplit th Tab with Profile: %s, cmd:%s" % (cur_profile_name, cmd))
-        change = iterm2.LocalWriteOnlyProfile()
-        change.set_command(cmd)
-        change.set_use_custom_command("Yes")
+        #change = iterm2.LocalWriteOnlyProfile()
+        #change.set_command(cmd)
+        #change.set_use_custom_command("Yes")
 
-        new_sess = await cur_sess.async_split_pane(vertical=False, profile=cur_profile_name, profile_customizations=change)
+        #new_sess = await cur_sess.async_split_pane(vertical=False, profile=cur_profile_name, profile_customizations=change)
+        new_sess = await cur_sess.async_split_pane(vertical=False, profile=cur_profile_name)
         await new_sess.async_activate()
 
         await changeWorkingDirectory(cur_profile_name, cur_sess, new_sess)
