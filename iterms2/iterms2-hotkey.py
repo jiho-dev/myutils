@@ -13,25 +13,6 @@ import time
 
 async def main(connection):
 
-    async def isShellIntegrated(cur_sess):
-        app = await iterm2.async_get_app(connection)
-        user_hostname = await cur_sess.async_get_variable(name="user.hostname")
-
-        print("Current Session: user.hostname=%s" % (user_hostname))
-
-        if user_hostname is None:
-            return False
-
-        return True
-
-    async def getUserRemoteHost(cur_sess):
-        app = await iterm2.async_get_app(connection)
-        user_remote_hostname = await cur_sess.async_get_variable(name="user.remote_hostname")
-
-        print("Current Session: user.remote_hostname=%s" % (user_remote_hostname))
-
-        return user_remote_hostname
-
     async def isLocalHost(cur_sess):
         app = await iterm2.async_get_app(connection)
         local_hostname = await app.async_get_variable(name="localhostName")
@@ -46,48 +27,31 @@ async def main(connection):
 
         return False
 
-    async def changeWorkingDirectory(profile_name, cur_sess, new_sess):
-        enabled = await isShellIntegrated(cur_sess)
-        isLocal = await isLocalHost(cur_sess)
-
-        if isLocal:
-            print("Skip changeWorkingDirectory because the localhost is Mac OS")
-            return
-        elif enabled:
-            # change dir
-            cur_dir = await cur_sess.async_get_variable(name="user.path")
-            print("user.path by integrated shell: %s" % cur_dir)
-
-            time.sleep(0.2)
-            msg = "cd " + cur_dir + "\n"
-            print("SendText: %s" % msg)
-            await new_sess.async_send_text(msg, True)
-
-        else:
-            ## if vim is running in the terminal, it won't work
+    async def sendText(msg, new_sess):
+        if not msg:
             return
 
-            #msg="stty -echo; printf \"\\e]1337;SetUserVar=%s=%s\\a\" path $(echo -n $(pwd) | base64); stty echo \n"
+        time.sleep(0.2)
+        print("SendText: %s" % msg)
+        msg += "\n"
 
-            await cur_sess.async_send_text("stty -echo \n" , True)
-            time.sleep(0.2)
-            msg="printf \"\\e]1337;SetUserVar=%s=%s\\a\" path $(echo -n $(pwd) | base64); stty echo \n"
-            await cur_sess.async_send_text(msg , True)
-            await cur_sess.async_send_text("\n" , True)
-            time.sleep(0.5)
+        await new_sess.async_send_text(msg, True)
 
-            cur_dir = await cur_sess.async_get_variable(name="user.path")
-            print("user.path by dynamic command: %s" % cur_dir)
+    async def changeDir(cur_sess, new_sess):
+        # change dir
+        cur_dir = await cur_sess.async_get_variable(name="user.path")
+        if not cur_dir:
+            return
 
-            msg = "cd " + cur_dir + "\n"
-            print("SendText: %s" % msg)
-            await new_sess.async_send_text(msg, True)
-
+        msg = "cd " + cur_dir
+        print("user.path by integrated shell: [%s]" % cur_dir)
+        await sendText(msg, new_sess)
+    
     async def getCurrentTab():
         app = await iterm2.async_get_app(connection)
         cwin = app.current_window
         if not cwin:
-            return None, None, None, None
+            return None, None, None
 
         cur_tab = cwin.current_tab
         cur_sess = cur_tab.current_session
@@ -95,107 +59,175 @@ async def main(connection):
 
         try:
             cur_profile = await cur_sess.async_get_profile()
-            user_remote_hostname = await cur_sess.async_get_variable(name="user.remote_hostname")
-
-            cmd = None
-            #if isNotBlank(user_remote_hostname):
-            if user_remote_hostname:
-                print("user.remote_hostname is not None: [%s] " % user_remote_hostname)
-                cmd = cur_profile.command.split()[0]
-                cmd = cmd + " " + user_remote_hostname
-            else:
-                print("user.remote_hostname is None: [%s] " % user_remote_hostname)
-
-            return cur_tab, cur_sess, cur_profile.name, cmd
+            
+            return cur_tab, cur_sess, cur_profile
 
         except iterm2.RPCException as err:
             print("error: {0}".format(err))
 
-        return None, None, None, None
+        return None, None, None
 
-    # command를 설정해서 서버에 자동 접속하게 하는 기능은 버그 사용 중
+    async def getCommand(tab, profile):
+        sess = tab.current_session        
+        user_remote_hostname = await sess.async_get_variable(name="user.remote_hostname")
+        
+        cmd = None
+        msg = None
+        if not user_remote_hostname:
+            return None, None
+
+        if "sss" in profile.command:
+            cmd = profile.command + " " +user_remote_hostname
+        else:
+            # XXX: resolve path for sss
+            msg = "sss " + user_remote_hostname
+
+        return cmd, msg
+
     @iterm2.RPC
     async def duplicate_tab():
+        print("\nDuplicate the Tab")
 
-        cur_tab, cur_sess, cur_profile_name, cmd = await getCurrentTab()
+        cur_tab, cur_sess, cur_profile = await getCurrentTab()
         if not cur_tab:
             print("Cannot find the currnet Tab")
             return
 
-        print("Duplicate the Tab with Profile: %s, cmd:%s" % (cur_profile_name, cmd))
+        isLocal = await isLocalHost(cur_sess)
+        cmd, msg = await getCommand(cur_tab, cur_profile)
+        cur_profile_name = cur_profile.name
+
+        print("Duplicate the Tab with Profile: name:%s, cmd:%s, new_cmd:%s, msg:%s" % 
+            (cur_profile_name, cur_profile.command, cmd, msg))
 
         app = await iterm2.async_get_app(connection)
         cwin = app.current_window
         tabs = list(cwin.tabs)
-        cur_tab_idx = tabs.index(cur_tab)단
+        cur_tab_idx = tabs.index(cur_tab)
 
-        #new_tab = await cwin.async_create_tab(profile=cur_profile_name,command=cmd, index=cur_tab_idx + 1)
-        new_tab = await cwin.async_create_tab(profile=cur_profile_name, index=cur_tab_idx + 1)
+        new_tab = await cwin.async_create_tab(profile=cur_profile_name, command=cmd, index=cur_tab_idx + 1)
+        #new_tab = await cwin.async_create_tab(profile=cur_profile_name, index=cur_tab_idx + 1)
         new_sess = new_tab.current_session
 
         await new_tab.async_activate()
         await new_sess.async_activate()
-        await changeWorkingDirectory(cur_profile_name, cur_sess, new_sess)
+
+        if msg:
+            # send msg
+            await sendText(msg, new_sess)
+        elif not isLocal:
+            # change dir
+            await changeDir(cur_sess, new_sess)
 
     await duplicate_tab.async_register(connection)
 
     @iterm2.RPC
     async def duplicate_tab_in_window():
+        print("\nDuplicate the Tab in Window")
 
-        cur_tab, cur_sess, cur_profile_name, cmd = await getCurrentTab()
+        cur_tab, cur_sess, cur_profile = await getCurrentTab()
         if not cur_tab:
             print("Cannot find the currnet Tab")
             return
+        
+        isLocal = await isLocalHost(cur_sess)
+        cmd, msg = await getCommand(cur_tab, cur_profile)
+        cur_profile_name = cur_profile.name
 
-        print("Duplicate the Tab in the new window with Profile: %s, cmd:%s " % (cur_profile_name, cmd))
-        #new_win = await iterm2.Window.async_create(connection=connection, command=cmd, profile=cur_profile_name)
-        new_win = await iterm2.Window.async_create(connection=connection, profile=cur_profile_name)
+        print("Duplicate the Tab with Profile: name:%s, cmd:%s, new_cmd:%s, msg:%s" % 
+            (cur_profile_name, cur_profile.command, cmd, msg))
+
+        app = await iterm2.async_get_app(connection)
+        cwin = app.current_window
+        tabs = list(cwin.tabs)
+        cur_tab_idx = tabs.index(cur_tab)
+
+        new_win = await iterm2.Window.async_create(connection=connection, command=cmd, profile=cur_profile_name)
+        #new_win = await iterm2.Window.async_create(connection=connection, profile=cur_profile_name)
         new_tab = new_win.current_tab
         await new_tab.async_activate()
         new_sess = new_tab.current_session
+
+        await new_tab.async_activate()
         await new_sess.async_activate()
-        await changeWorkingDirectory(cur_profile_name, cur_sess, new_sess)
+
+        if msg:
+            # send msg
+            await sendText(msg, new_sess)
+        elif not isLocal:
+            # change dir
+            await changeDir(cur_sess, new_sess)
+
 
     await duplicate_tab_in_window.async_register(connection)
 
     @iterm2.RPC
     async def vsplit_tab():
+        print("\nVSplit the Tab in Window")
 
-        cur_tab, cur_sess, cur_profile_name, cmd = await getCurrentTab()
+        cur_tab, cur_sess, cur_profile = await getCurrentTab()
         if not cur_tab:
             print("Cannot find the currnet Tab")
             return
+        
+        isLocal = await isLocalHost(cur_sess)
+        cmd, msg = await getCommand(cur_tab, cur_profile)
+        cur_profile_name = cur_profile.name
 
-        print("VSplit the Tab with Profile: %s, cmd:%s" % (cur_profile_name, cmd))
-        #change = iterm2.LocalWriteOnlyProfile()
-        #change.set_command(cmd)
-        #change.set_use_custom_command("Yes")
+        print("Duplicate the Tab with Profile: name:%s, cmd:%s, new_cmd:%s, msg:%s" % 
+            (cur_profile_name, cur_profile.command, cmd, msg))
 
-        #new_sess = await cur_sess.async_split_pane(vertical=True, profile=cur_profile_name, profile_customizations=change)
-        new_sess = await cur_sess.async_split_pane(vertical=True, profile=cur_profile_name)
+        change = None
+        if cmd:
+            change = iterm2.LocalWriteOnlyProfile()
+            change.set_command(cmd)
+            change.set_use_custom_command("Yes")
+
+        new_sess = await cur_sess.async_split_pane(vertical=True, profile=cur_profile_name, profile_customizations=change)
+        #new_sess = await cur_sess.async_split_pane(vertical=True, profile=cur_profile_name)
         await new_sess.async_activate()
 
-        await changeWorkingDirectory(cur_profile_name, cur_sess, new_sess)
+        if msg:
+            # send msg
+            await sendText(msg, new_sess)
+        elif not isLocal:
+            # change dir
+            await changeDir(cur_sess, new_sess)
 
     await vsplit_tab.async_register(connection)
 
     @iterm2.RPC
     async def hsplit_tab():
-        cur_tab, cur_sess, cur_profile_name, cmd = await getCurrentTab()
+        print("\nVSplit the Tab in Window")
+
+        cur_tab, cur_sess, cur_profile = await getCurrentTab()
         if not cur_tab:
             print("Cannot find the currnet Tab")
             return
+        
+        isLocal = await isLocalHost(cur_sess)
+        cmd, msg = await getCommand(cur_tab, cur_profile)
+        cur_profile_name = cur_profile.name
 
-        print("HSplit th Tab with Profile: %s, cmd:%s" % (cur_profile_name, cmd))
-        #change = iterm2.LocalWriteOnlyProfile()
-        #change.set_command(cmd)
-        #change.set_use_custom_command("Yes")
+        print("Duplicate the Tab with Profile: name:%s, cmd:%s, new_cmd:%s, msg:%s" % 
+            (cur_profile_name, cur_profile.command, cmd, msg))
 
-        #new_sess = await cur_sess.async_split_pane(vertical=False, profile=cur_profile_name, profile_customizations=change)
-        new_sess = await cur_sess.async_split_pane(vertical=False, profile=cur_profile_name)
+        change = None
+        if cmd:
+            change = iterm2.LocalWriteOnlyProfile()
+            change.set_command(cmd)
+            change.set_use_custom_command("Yes")
+
+        new_sess = await cur_sess.async_split_pane(vertical=False, profile=cur_profile_name, profile_customizations=change)
+        #new_sess = await cur_sess.async_split_pane(vertical=False, profile=cur_profile_name)
         await new_sess.async_activate()
 
-        await changeWorkingDirectory(cur_profile_name, cur_sess, new_sess)
+        if msg:
+            # send msg
+            await sendText(msg, new_sess)
+        elif not isLocal:
+            # change dir
+            await changeDir(cur_sess, new_sess)
 
     await hsplit_tab.async_register(connection)
 
