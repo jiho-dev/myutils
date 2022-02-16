@@ -41,7 +41,7 @@ async def main(connection):
         #macism com.apple.inputmethod.Korean.2SetKorean
         #macism com.apple.keylayout.US
         #print("set input-source to US")
-        os.system("macism com.apple.keylayout.US")
+        os.system("/usr/local/bin/macism com.apple.keylayout.US")
 
     async def keystroke_handler(keystroke):
         key = keystroke.keycode
