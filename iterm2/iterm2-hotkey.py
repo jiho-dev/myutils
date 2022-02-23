@@ -46,7 +46,7 @@ async def main(connection):
         msg = "cd " + cur_dir
         print("user.path by integrated shell: [%s]" % cur_dir)
         await sendText(msg, new_sess)
-    
+
     async def getCurrentTab():
         app = await iterm2.async_get_app(connection)
         cwin = app.current_window
@@ -59,7 +59,7 @@ async def main(connection):
 
         try:
             cur_profile = await cur_sess.async_get_profile()
-            
+
             return cur_tab, cur_sess, cur_profile
 
         except iterm2.RPCException as err:
@@ -68,9 +68,9 @@ async def main(connection):
         return None, None, None
 
     async def getCommand(tab, profile):
-        sess = tab.current_session        
+        sess = tab.current_session
         user_remote_hostname = await sess.async_get_variable(name="user.remote_hostname")
-        
+
         cmd = None
         msg = None
         if not user_remote_hostname:
@@ -97,7 +97,7 @@ async def main(connection):
         cmd, msg = await getCommand(cur_tab, cur_profile)
         cur_profile_name = cur_profile.name
 
-        print("Duplicate the Tab with Profile: name:%s, cmd:%s, new_cmd:%s, msg:%s" % 
+        print("Duplicate the Tab with Profile: name:%s, cmd:%s, new_cmd:%s, msg:%s" %
             (cur_profile_name, cur_profile.command, cmd, msg))
 
         app = await iterm2.async_get_app(connection)
@@ -115,7 +115,7 @@ async def main(connection):
         if msg:
             # send msg
             await sendText(msg, new_sess)
-        elif not isLocal:
+        else:
             # change dir
             await changeDir(cur_sess, new_sess)
 
@@ -129,12 +129,12 @@ async def main(connection):
         if not cur_tab:
             print("Cannot find the currnet Tab")
             return
-        
+
         isLocal = await isLocalHost(cur_sess)
         cmd, msg = await getCommand(cur_tab, cur_profile)
         cur_profile_name = cur_profile.name
 
-        print("Duplicate the Tab with Profile: name:%s, cmd:%s, new_cmd:%s, msg:%s" % 
+        print("Duplicate the Tab with Profile: name:%s, cmd:%s, new_cmd:%s, msg:%s" %
             (cur_profile_name, cur_profile.command, cmd, msg))
 
         app = await iterm2.async_get_app(connection)
@@ -154,7 +154,7 @@ async def main(connection):
         if msg:
             # send msg
             await sendText(msg, new_sess)
-        elif not isLocal:
+        else:
             # change dir
             await changeDir(cur_sess, new_sess)
 
@@ -169,12 +169,12 @@ async def main(connection):
         if not cur_tab:
             print("Cannot find the currnet Tab")
             return
-        
+
         isLocal = await isLocalHost(cur_sess)
         cmd, msg = await getCommand(cur_tab, cur_profile)
         cur_profile_name = cur_profile.name
 
-        print("Duplicate the Tab with Profile: name:%s, cmd:%s, new_cmd:%s, msg:%s" % 
+        print("Duplicate the Tab with Profile: name:%s, cmd:%s, new_cmd:%s, msg:%s" %
             (cur_profile_name, cur_profile.command, cmd, msg))
 
         change = None
@@ -190,7 +190,7 @@ async def main(connection):
         if msg:
             # send msg
             await sendText(msg, new_sess)
-        elif not isLocal:
+        else:
             # change dir
             await changeDir(cur_sess, new_sess)
 
@@ -204,12 +204,12 @@ async def main(connection):
         if not cur_tab:
             print("Cannot find the currnet Tab")
             return
-        
+
         isLocal = await isLocalHost(cur_sess)
         cmd, msg = await getCommand(cur_tab, cur_profile)
         cur_profile_name = cur_profile.name
 
-        print("Duplicate the Tab with Profile: name:%s, cmd:%s, new_cmd:%s, msg:%s" % 
+        print("Duplicate the Tab with Profile: name:%s, cmd:%s, new_cmd:%s, msg:%s" %
             (cur_profile_name, cur_profile.command, cmd, msg))
 
         change = None
@@ -225,7 +225,7 @@ async def main(connection):
         if msg:
             # send msg
             await sendText(msg, new_sess)
-        elif not isLocal:
+        else:
             # change dir
             await changeDir(cur_sess, new_sess)
 
