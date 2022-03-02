@@ -25,9 +25,10 @@ def make_title(auto_name, profile_name):
     else:
         return ""
 
-def make_hostname(hostname, localhost):
+def make_hostname(hostname, localhost, profile_name):
     if not hostname:
-        return ""
+        return profile_name
+
     short_hostname = shortened_hostname(hostname)
     if short_hostname and short_hostname != localhost:
         return short_hostname
@@ -72,12 +73,12 @@ async def main(connection):
         profile_name=iterm2.Reference("profileName?")):
 
         if user_remote_hostname:
-            return user_remote_hostname
+            return shortened_hostname(user_remote_hostname)
 
         if user_hostname:
-            return user_hostname
+            return shortened_hostname(user_hostname)
 
-        return make_hostname(hostname, localhost)
+        return make_hostname(hostname, localhost, profile_name)
 
     await tab_title_fixed_hostname.async_register(
             connection,
