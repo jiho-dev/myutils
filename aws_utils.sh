@@ -111,6 +111,12 @@ aws-inst-desc() {
 	echo "HostIP: $host_ip"
 }
 
+aws-inst-console() {
+	local inst_id=$1
+
+	aws ec2 get-console-output --instance-id $inst_id | jq .Output | jq -r
+}
+
 aws-ngw-inst() {
 	local ngw_id=$1
 
