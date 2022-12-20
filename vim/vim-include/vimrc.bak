@@ -1,0 +1,1097 @@
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 기본 환경을 설정한다.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set exrc
+set title
+set history=100
+set	showcmd
+set showmode
+" {}의 쌍을 보여 준다.
+set showmatch
+" set nowrap
+set wrap
+set noignorecase
+set nomesg
+set noslowopen
+set noterse
+"set nonumber
+set number
+"set report=2
+"set wrapmargin=3
+set nolinebreak
+set ruler
+set autoindent
+"set cindent
+set smartindent
+set visualbell t_vb=
+set cursorline
+
+" swap 파일을 만들지 않는다.
+set noswapfile
+set directory=$HOME/.vimswp//
+
+" debugging
+"set verbosefile=~/.vim/verbose.log
+"set verbose=100
+
+" 현재 디렉토리 변경
+set autochdir
+
+filetype indent on
+
+" tab을 space으로 변경
+"set expandtab
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4 " makes the spaces feel like real tabs
+
+"붙여 넣기시 계단현상 제거(http://demo.initech.com/?document_srl=9718)
+"set paste!
+
+"Backspace key won't move from current line
+set backspace=indent,eol,start
+
+"""""""""""""""""""""""""""""""""""""""""""
+" setup encoding parameters
+"""""""""""""""""""""""""""""""""""""""""""
+"set fileencodings=utf-8,cp949,euc-kr
+set fileencodings=utf-8,euc-kr,latin1 
+"set encoding=cp949
+"set encoding=euc-kr
+"set encoding=utf-8
+
+"""""""""""""""""""""""""""""""""""""""""""
+" setup terminal encoding
+"""""""""""""""""""""""""""""""""""""""""""
+set termencoding=utf-8
+
+" { 의 위치 지정
+" help cinoptions-values
+" vim default values
+"cinoptions=>s,e0,n0,f0,{0,}0,^0,:s,=s,l0,gs,hs,ps,ts,+s,c3,C0,(2s,us, \U0,w0,m0,j0,)20,*30
+"set cino=e1
+
+" 091030 현재 사용중.
+" {}의 위치가 복합적으로 사용 되는 경우 불편하다.
+"set cino={1s,:0,(0
+"set cino=\:0,:0,(0
+"set cino=:0,(0,c0,l1
+"set cino=(0,c0,l1 " switch-case 정렬 방법 변경.
+set cino=(0,c0,:0 " switch-case 정렬 방법 변경.
+
+
+" 명령어 실행시 자동 저장
+set autowrite
+
+" fileformat is unix
+set ff=unix
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"편집 기능 설정
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"커서의 위치를 항상 보이게 함.
+set ru
+
+"완성중인 명령을 표시
+set sc
+
+"여러 가지 이동 동작시 줄의 시작으로 자동 이동
+set sol
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"검색 기능 설정
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"검색어 강조 기능
+set hls
+
+"검색시 파일 끝에서 처음으로 되돌리기 안함
+"set nows
+
+"검색시 대소문자를 구별하지 않음
+set ic
+
+"똑똑한 대소문자 구별 기능 사용
+set scs
+
+" tab menu off
+set showtabline=0
+
+" 윈도우 생성 옵션
+set splitbelow
+set splitright
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 기타
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax on
+filetype on
+
+" for css
+"filetype plugin indent on
+
+" 마우스 사용을 활성화 한다.
+"set mouse=an
+
+"if has("terminfo")
+"set t_Co=8
+"set t_Sf=[3%p1%dm
+"set t_Sb=[4%p1%dm
+"else
+"set t_Co=8
+"set t_Sf=[3%dm
+"set t_Sb=[4%dm
+"endif
+"
+" disable autofold
+set nofoldenable
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  컬러를 정의한다.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"============================"
+" Color Code Table
+"============================"
+" 0		Black
+" 1		Dark Red
+" 2		Drak Green
+" 3		Yellow
+" 4		Dark Blue
+" 5		Dark Magenta
+" 6 	Dark Cyan
+" 7		White
+"============================"
+"*cterm-colors*
+
+"NR-16   NR-8    COLOR NAME
+"0       0       Black
+"1       4       DarkBlue
+"2       2       DarkGreen
+"3       6       DarkCyan
+"4       1       DarkRed
+"5       5       DarkMagenta
+"6       3       Brown, DarkYellow
+"7       7       LightGray, LightGrey, Gray, Grey
+"8       0*      DarkGray, DarkGrey
+"9       4*      Blue, LightBlue
+"10      2*      Green, LightGreen
+"11      6*      Cyan, LightCyan
+"12      1*      Red, LightRed
+"13      5*      Magenta, LightMagenta
+"14      3*      Yellow, LightYellow
+"15      7*      White
+
+"set t_Co=256
+set t_Co=16
+
+"colorschem evening
+colorschem ron
+
+"일반적인 문자에 적용 된다.
+"hi Normal ctermbg=DarkGrey ctermfg=White guifg=White guibg=grey20
+"hi Normal ctermbg=DarkGrey ctermfg=Gray guifg=Gray guibg=Black
+
+"
+"	Normal Tag
+"
+hi 			Search 		ctermfg=0 ctermbg=7 
+highlight	Comment		ctermfg=6
+"highlight	Include		ctermfg=6 cterm=bold
+"highlight	Statement	ctermfg=3
+"highlight	String		ctermfg=3
+"highlight	Type		ctermfg=2
+"highlight	Function	cterm=bold
+"highlight	Error		ctermfg=1 cterm=bold
+"highlight	PreCondit	ctermfg=6 cterm=bold
+"
+" for GO
+hi goDiagnosticError ctermbg=5 ctermfg=7*
+hi goDiagnosticWarning ctermbg=7 ctermfg=0
+
+" 현재 라인을 표시한다.
+"highlight ActiveJob ctermfg=black ctermbg=white
+"hi LineNr term=underline ctermfg=DarkYellow guifg=Yellow
+hi LineNr ctermfg=DarkYellow guifg=Yellow
+"hi CursorLineNr term=underline cterm=underline ctermfg=DarkYellow gui=underline guifg=Yellow
+hi CursorLineNr term=reverse cterm=reverse ctermfg=DarkYellow gui=reverse guifg=Yellow
+hi CursorLine term=NONE cterm=NONE 
+
+hi WarningMsg term=standout ctermfg=LightRed guifg=Red
+
+" (), {} 매치
+"hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
+hi MatchParen cterm=NONE ctermbg=red ctermfg=white
+"
+"	Makefile
+"
+highlight   makeSpecial ctermfg=1 cterm=NONE
+highlight   makeTarget  ctermfg=1 cterm=NONE
+highlight   makeIdent   ctermfg=4 cterm=NONE
+highlight   makeEscapedChar ctermfg=1 cterm=NONE
+
+"
+"	C programming Color definition
+"
+highlight	cComment	ctermfg=6
+highlight	cType		ctermfg=2
+"highlight	cppType		ctermfg=3
+"highlight	cppClassDecl	ctermfg=2
+"highlight	cppClassPreDecl	ctermfg=2
+highlight	cStructure	ctermfg=2
+highlight	cStorageClass	ctermfg=2
+"highlight	cFunction	ctermfg=7
+"highlight	cppFunction	ctermfg=7
+"highlight	cppStatement	ctermfg=2
+"highlight	cppMethod	ctermfg=7
+
+"highlight	cString		ctermfg=5
+highlight	cString		ctermfg=red
+highlight	cNumber		ctermfg=red
+highlight	cConstant	ctermfg=red
+"highlight	cCharacter	ctermfg=7
+"highlight	cSpecial	ctermfg=7
+highlight	cSpecial	ctermfg=Magenta
+
+"""""
+highlight	cText		ctermfg=Gray
+highlight	cStatement	ctermfg=Gray
+"highlight	cCharacter	ctermfg=Gray
+"""""
+
+highlight	cLabel		ctermfg=2
+"highlight	cLabel		ctermfg=Green
+highlight	cUserLabel	ctermfg=2
+highlight	cUserCont	ctermfg=2
+highlight	cConditional	ctermfg=2
+highlight	cRepeat		ctermfg=2
+highlight	cStatement	ctermfg=2
+highlight	cOperator	ctermfg=2
+highlight	cError		ctermfg=2
+
+"highlight	cCommentError	ctermfg=7
+highlight	cInclude	ctermfg=2
+"highlight	cIncluded	ctermfg=4
+"highlight	cPreProc	ctermfg=7
+"highlight	cPreCondit	ctermfg=1
+"highlight	cDefine		ctermfg=orange
+
+"
+"	HTML
+"
+"highlight	htmlStatement	ctermfg=3
+"highlight	htmlValue	ctermfg=6
+"highlight	htmlString	ctermfg=6
+
+"highlight link htmlFunction   ctermfg=3
+"highlight htmlTag    ctermfg=3
+"highlight link htmlFuncDef    ctermfg=3
+"highlight link htmlArg    Type
+"highlight link htmlTagName    htmlStatement
+"highlight link htmlValue  Value
+"highlight link htmlSpecialChar Special
+"highlight link htmlSpecial    Special
+"highlight link htmlSpecialChar    Special
+"highlight link htmlString     String
+"highlight link htmlCharacter  Character
+"highlight link htmlSpecialCharacter   htmlValue
+"highlight link htmlNumber     Number
+"highlight link htmlStatement  Statement
+"highlight link htmlComment    Comment
+"highlight link htmlPreProc    PreProc
+"highlight link htmlType   Type
+"highlight link htmlValue  String
+
+"
+"	Java
+"
+"highlight javaComment    ctermfg=2
+"highlight javaExternal    ctermfg=6
+"highlight javaConditional    ctermfg=2
+"highlight javaRepeat    ctermfg=2
+highlight javaExceptions    ctermfg=1
+highlight javaClassDecl    ctermfg=3
+
+highlight javaType    ctermfg=7
+highlight javaOperator    ctermfg=7
+
+highlight javaBraces    ctermfg=3
+highlight javaFuncDef    ctermfg=3
+highlight javaString    ctermfg=7
+
+highlight javaClassDef	ctermfg=3
+
+" for vimdiff
+" cterm - sets the style
+" ctermfg - set the text color
+" ctermbg - set the highlighting
+" DiffAdd - line was added
+" DiffDelete - line was removed
+" DiffChange - part of the line was changed (highlights the whole line)
+" DiffText - the exact part of the line that changed
+
+"highlight DiffAdd cterm=none ctermfg=bg ctermbg=Green gui=none guifg=bg guibg=Green
+"highlight DiffAdd cterm=none ctermfg=White ctermbg=Green gui=none guifg=bg guibg=Green
+"highlight DiffDelete cterm=none ctermfg=bg ctermbg=Red gui=none guifg=bg guibg=Red
+"highlight DiffDelete cterm=none ctermfg=bg ctermbg=White gui=none guifg=bg guibg=White
+"highlight DiffChange cterm=none ctermfg=bg ctermbg=Yellow gui=none guifg=bg guibg=Yellow
+"highlight DiffChange cterm=none ctermfg=White ctermbg=Yellow gui=none guifg=bg guibg=Yellow
+"highlight DiffText cterm=none ctermfg=bg ctermbg=Magenta gui=none guifg=bg guibg=Magenta
+"highlight DiffText cterm=none ctermfg=White ctermbg=Magenta gui=none guifg=bg guibg=Magenta
+
+
+"highlight BadWhitespace ctermbg=red guibg=#d70000
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  function key mapping
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"map 	<2-LeftMouse> <NOP>
+"map 	<RightMouse> <NOP>
+"map 	<2-RightMouse> <NOP>
+
+" 함수 help
+"map 	<F1> 	K
+"imap 	<F1> 	<C-O>K
+map 	<F1> 	<NOP>
+imap 	<F1> 	<NOP>
+
+" 파일 저장
+map 	<F2> 	:w!<CR>
+imap 	<F2> 	<C-O>:w!<CR>
+
+" Run make
+map 	<F3> 	:call DoMake()<CR>
+imap 	<F3> 	<C-O>:call DoMake()<CR>
+"map 	<F3> 	:make!<CR>
+"imap 	<F3> 	<C-O>:make!<CR>
+
+map 	<F4>	:make! custom<CR>
+imap 	<F4> 	<C-O>:make! custom<CR>
+
+" F4 to toggle paste mode
+map 	<F5> :set invpaste<CR>
+set pastetoggle=<F5>
+
+"map 	<F5> 	:25vs ./<CR>
+"map 	<F5> 	:make! tag<CR>
+"imap 	<F5> 	<C-O>:make! tag<CR>
+
+" function prototype
+map 	<F6> 	[i
+
+" 폴더 창 이동
+"map 	<F6> 	w
+
+" 선택된 파일 열기
+"map 	<F7> 	O
+
+"
+"map 	<F8>
+
+" 무조건 종료
+"map 	<F9> 	:q!<CR>
+"imap 	<F9> 	<C-O>:q!<CR>
+
+" [중요] : screen에서 사용하기 위해 F10~F12는 남겨 놓는다.
+" 정의는 .screenrc에 있음.
+"map 	<F10>
+"map 	<F11>
+"map 	<F12>
+
+" {{{ }}}
+"nmap 	<F9> 	[{v]}zf
+" folding
+"nmap 	<F11> 	v]}zf
+" folding 복구
+"nmap 	<F12> 	zo
+
+" Vertical Window Movement
+" Move left window
+"map <F9> 	<C-W>H
+" Move right window
+"ap <F12> 	<C-W>L
+" Move up window
+"ap <F10> 	<C-W>K
+" Move donw window
+"ap <F11> 	<C-W>J
+
+"map J 	<C-W>H
+"map K 	<C-W>L
+"map I 	<C-W>K
+"map M 	<C-W>J
+
+map <F7> 	<C-O>
+map <F8> 	<C-I>
+
+map <F9>    :IndexerRebuild<CR>
+imap <F9>   :IndexerRebuild<CR>
+
+"map <F9>    :call MakeDoxygenComment()<CR>
+"map <F10> 	:call InsertFileDesc()<CR>
+"map <F11> 	:call InsertHeaderFileDesc()<CR>
+"map <F12> 	:call InsertExcludeTag()<CR>
+"map <F12> 	:NERDTreeToggle<CR>
+map <F12> 	:call RemoveVimSwapFile()<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"   key mapping
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" copy to clipboard file
+"map 	<C-C> 	:w! ~/.vimbuf<CR>
+"map 	<C-C> 	y:tabnew<CR>p1Gdd:w! ~/.vimbuf<CR>:q!<CR>
+map 	<silent> <C-C> 	:call CopyToBuf()<CR>
+
+" paste to current line from clipboard file
+"map 	<C-V> 	:r ~/.vimbuf<CR>
+"imap 	<C-V> 	<C-O>:r ~/.vimbuf<CR>
+"map 	<C-V> 	:tabnew<CR>:r ~/.vimbuf<CR>1GddyG:tabn<CR>p:tabn<CR>:q!<CR>
+"imap 	<C-V> 	<ESC>:tabnew<CR>:r ~/.vimbuf<CR>1GddyG:tabn<CR>p:tabn<CR>:q!<CR>
+map 	<C-V> 	:call PasteFromBuf()<CR>
+
+" 화면이동 키를 리맵한다.
+map 	<C-j> 	<C-E>
+imap 	<C-j> 	<C-O><C-E>
+map 	<C-k> 	<C-Y>
+imap 	<C-k> 	<C-O><C-Y>
+
+map 	f 		<C-f> 	
+map 	b 		<C-b> 	
+
+" 함수가 여러개 있는 경우 선택 가능하게 한다.
+"map		<C-->	g]
+"map		<C-\>	g]
+"map 	<C-p> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+" 화면에 highligt를 반전한다.
+"map 	<C-I> 	:set invhls<CR>
+
+map 	<C-o> 	:e 
+"map 	<C-p> 	<Nop>
+
+" disable increase number
+nmap    <C-A> 	<Nop>
+" disable decrease number
+nmap    <C-X> 	<Nop>
+
+"""""""""""""""""""""""""""""""""""""""""""""""
+"" for normal key 
+
+" C souce commnet
+noremap <silent> ,c :call CommentLine()<CR>
+noremap <silent> ,u :call UnCommentLine()<CR>
+
+" 변경내용을 무시하고 무조건 vim을 종료 
+noremap <silent> Q :q!<CR>
+
+" grep for word under cursor in c/cpp/h-files 
+"map 	,g 	:grep! --color=auto --exclude=tags --exclude=cscope.out -I <cword> *.[ch]   <cr> :cw<CR>
+map 	,g 	:grep! --color=auto --exclude=tags --exclude=cscope.out -I <cword> *   <cr> :cw<CR>
+map 	,G 	:grep! --exclude=tags --exclude=cscope.out --exclude-dir="linux_*" --exclude-dir=".svn"  -I <cword> * -r<cr> :cw<CR>
+
+" 해당 파일의 함수 리스트를 보여준다.
+"noremap ,t 	:TlistToggle<CR>
+
+" close error window
+"nnoremap ,e :call MyToggleQuickFix()<CR>
+nnoremap ,e :call ToggleQuickfixList()<CR>
+nnoremap ,s :call ToggleErrors()<CR>
+"noremap ,e 	:cw<CR>
+" close error window
+"noremap ,w 	:ccl<CR>
+
+" fileformat를 unix로 바꾼다. CR/LF가 있을 경우 unix형으로 하면 CR 이 없어진다.
+noremap ,m 	:set ff=unix<CR>
+
+" 현재 커서 위치의 문자를 변경한다.
+nmap 	,r 	:%s/\<<c-r><c-w>\>/
+" / / coloring이 이상해져서 넣었음...
+
+" 함수 설명을 추가한다.
+"noremap ,h 	:call InsertDesc()<CR>
+"noremap ,h  :call MakeDoxygenComment()<CR>
+
+" 이름과 날짜를 추가한다.
+noremap ,n 	:call InsertName()<CR>
+
+" 현재의 {}를 formatting 한다.
+noremap	,f		=a{''	
+
+" 현재 word를 대문자로 변환
+noremap	,u 		gUiw
+
+" 파일 전체 formatting
+" gg=G
+"
+" set paste
+" set nopaste
+
+" 현재의 위치에서 바로 상위 {}를 찾는다.
+noremap {		[{
+
+" 현재의 위치에서 바로 아래 {}를 찾는다.
+noremap }		]}
+
+" 라인의 처음으로 이동한다.
+noremap `		0
+" 라인의 맨끝으로 이동한다.
+noremap 0		$
+
+"현재의 블럭을 좌indent 한다.
+noremap ,<	<a{
+
+"현재의 블럭을 우indent 한다.
+noremap ,>	>a{
+
+" mark에 관한 키 설정
+map .m :call ToggleMarkWok()<cr>
+map .c :call KillAllMarksWok()<cr>
+map .p :call PrevMarkWok()<cr>
+map .n :call NextMarkWok()<cr>
+"nnoremap <silent> <leader>ff :call g:Jsbeautify()<cr>
+map .f :call g:Jsbeautify()<cr>
+
+" command key
+noremap ; :
+
+" 먼지 잘모르겠음...
+"map f :s/^/\/\//g
+"map F :s/^/\/\//g
+"map t :s/^/\t//g
+"map T :s/^\t//g
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" autocmd
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" c,cpp,h 파일은 tab을 space으로 변경
+au Bufenter *.\(c\|cpp\|h\) set expandtab
+autocmd FileType make setlocal noexpandtab 	" disable it for Makefile
+
+" PlantUML
+" ~/.vim/syntax$ wget https://raw.githubusercontent.com/aklt/plantuml-syntax/master/syntax/plantuml.vim
+" https://github.com/scrooloose/vim-slumlord
+" https://github.com/weirongxu/plantuml-previewer.vim
+autocmd BufRead,BufNewFile *.puml set filetype=plantuml
+"au FileType plantuml let g:plantuml_previewer#plantuml_jar_path = get(
+"    \  matchlist(system('cat `which plantuml` | grep plantuml.jar'), '\v.*\s[''"]?(\S+plantuml\.jar).*'),
+"    \  1,
+"    \  0
+"    \)
+
+
+"
+" use white space instead of tab in Python
+autocmd FileType * set tabstop=4|set shiftwidth=4|set noexpandtab|set fo=tcq
+"autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
+"autocmd BufEnter *.py set ai sw=4 ts=4 sta et fo=croql
+autocmd BufEnter *.py set ai sw=4 ts=4 sta et fo=ql wrap
+autocmd BufEnter *.conf setf dosini set expandtab sw=4 ts=4
+au BufEnter *.conf set expandtab
+
+" auto comment 기능을 off 한다. /**/의 자동 생성
+"au FileType *.c setl fo-=cro
+"au FileType *.c setlocal comments-=://
+" 마지막 편집 위치로 간다
+autocmd BufReadPost *
+   \ if line("'\"") > 0 && line("'\"") <= line("$") |
+   \   exe "normal g`\"" |
+   \   exe "normal zz" |
+   \ endif
+
+" 라인끝의 whitespace를 red로 표시
+"au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+" comment 와 관련한 사항.
+"autocmd FileType c,cpp  set formatoptions=croql cindent comments=sr:/*,mb:*,el:*/,://
+
+" Makefile에서 '#'으로 시작되는 문장에서 indent가 없어 지는 현상 방지
+"autocmd FileType * set cindent
+"autocmd FileType make set cindent
+
+"autocmd FileType * set cindent
+"	    \ cinkeys-=0#
+
+" 현재 디렉토리를 현재 열고 있는 문서의 디렉토리로 변경한다.
+"if has("autocmd")
+"	autocmd BufEnter * :cd %:p:h
+"endif
+
+" 단어 자동 완성 기능을 사용한다.
+"autocmd VimEnter * call DoWordComplete()
+
+" jQuery syntax
+"au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
+"au BufRead,BufNewFile *.js set filetype=javascript
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" status line 정의
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" status line 출력 기능.
+set laststatus=2
+set statusline=%4*%m%3*%<%F%3*%=%5*\ Line\ %3l\ Column\ %c\ %p%%\ %4*%m
+"set statusline=\ %F%m%r%h\ %w\ \ \ \ Line:\ %l/%L:%c
+
+" 상태라인에 파일명, 함수명을 출력한다.
+let g:ctags_statusline=2
+let g:generate_tags=1
+
+" doxygen parameter
+let g:Dox_Author="정지호"
+let g:Dox_CurrentDate = 1
+let g:Dox_Param = 1
+" repos_dir 은  개발자 개발 경로로 수정
+let g:repos_dir	="/data/patrick/src/sg30_main"
+let g:sg_dir = "sg30"
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  vim에서 사용하는 유용한 키를 잊어먹지 않기 위해 적어 놓는다.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 1) ^p, ^n : 함수,변수 자동 완성기능   
+" 2) 
+" 3) :'<,'>s/fred/joe/g  => 선택한 영역을 바꾼다.
+
+function! InsertTabWrapper()
+	let col = col('.') - 1
+	if !col || getline('.')[col-1]!~'\k'
+		return "\<TAB>"
+	else
+	if pumvisible()
+		return "\<C-N>"
+	else
+		return "\<C-N>\<C-P>"
+	end
+	endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+"inoremap <expr> <CR> pumvisible() ? "<C-Y><CR>" : "<CR>"
+
+hi Pmenu ctermbg=6
+hi PmenuSel ctermbg=yellow ctermfg=black
+hi PmenuSbar ctermbg=blue
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" copy and paste in vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! CopyToBuf()
+	let firstline = line("'<")
+	let lastline  = line("'>")
+	let buffile = expand("~/.vimbuf")
+	exe 'redir! > ' . buffile
+	redir END
+	for lno in range(firstline, lastline)
+		let copybuf = getline(lno)
+		exe 'redir >> ' . buffile
+		silent echon copybuf . "\n"
+		redir END
+	endfor
+endfunction
+
+function! PasteFromBuf()
+	let buffile = expand("~/.vimbuf")
+	let curline = line('.')
+	let copybuf =  readfile(buffile)
+	call append(curline, copybuf)
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tag file 정의
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set tags=
+"set tags=./tags,/usr/include/tags,/usr/src/linux/tags 
+"set tags=/usr/src/linux-3.16.0/tags
+set tags+=./tags
+set tags+=./../tags
+"set tags+=/home/jhj/src/tiw/suricata/tags
+"set tags+=/home/jhj/src/mos/pcap_mos/tags
+"set tags+=/home/jhj/src/mos/dpdk_mos/tags
+"set tags+=/home/jiho/src/kraken/tags
+"set tags+=/home/jiho.jung/src/ovs/tags
+"set tags+=/home/jiho.jung/src/openvswitch-2.14.0/tags
+"set tags+=/home/jiho.jung/src/openvswitch-2.15.0-mine/tags
+"set tags+=/home/jiho.jung/src/jiho-dev/openvswitch-2.11.1/tags
+"set tags+=/home/jiho.jung/src/ulogd-2.0.7/tags
+"set tags+=/home/jiho.jung/src/3.10.0-957.el7.x86_64/tags
+"set tags+=/home/jiho.jung/src/kernel/linux-3.10.0-1127.el7/tags
+"set tags+=/home/jiho.jung/src/kernel/linux-4.18.0-240.22.1.el8_3/tags
+"set tags+=/home/jiho.jung/src/kernel/linux-3.10.0-1127.el7/tags
+"set tags+=/home/jiho.jung/src/trex/trex-core-2.80/src/tags
+"set tags+=/home/jiho.jung/src/dpvs/tags
+"set tags+=/home/jiho.jung/src/jiho-dev/libevent/tags
+"set tags+=/home/jiho.jung/src/jiho-dev/libevent/tags
+"set tags+=/home/jiho.jung/~/src/jiho-dev/tcpscaler/tags
+"set tags+=/home/jiho.jung/src/libvirt/tags
+"set tags+=/home/jiho.jung/src/suricata/src/tags
+"set tags+=/home/jiho.jung/src/jiho-dev/sprotly/src/tags
+
+
+set path=./,./include,../include,../../include,../../../include,/usr/include
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" indexer plugin을 사용하면서, 더이상 필요 없음.
+function! UPDATE_TAGS()
+	let _f_ = expand("%:p")
+	"let _f_ = expand("%:p:h")
+	"echo _f_
+ 	let cwd = getcwd()
+  	let tagfilename = cwd . "/tags"
+	"let _cmd_ = '"ctags -a -f /dvr/tags --c++-kinds=+p --fields=+iaS --extra=+q " ' . '"' . _f_ . '"'
+	let _cmd_='ctags -R --exclude=bak --exclude=cornerstone-framework-master --exclude=webdoc -I EXPORT_SYMBOL,EXPORT_SYMBOL_GPL'
+	let _resp = system(_cmd_)
+	unlet _cmd_
+	unlet _f_
+	unlet _resp
+endfunction
+"autocmd BufWritePost *.cpp,*.h,*.c,*.cc call UPDATE_TAGS()
+
+" on/off cscope
+let g:use_cscope=1
+
+if has("cscope")
+"	set csprg=~/bin/cscope
+"	set csto=0
+"	set cst
+"	set nocsverb
+	" add any database in current directory
+	if filereadable("cscope.out")
+		cs add cscope.out
+	" else add database pointed to by environment
+	elseif $CSCOPE_DB != ""
+		cs add $CSCOPE_DB
+	endif
+endif
+
+function! s:GetBufferList() 
+  redir =>buflist 
+  silent! ls 
+  redir END 
+  return buflist 
+endfunction
+
+function! ToggleQuickfixList()
+  for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Quickfix List"'), 'str2nr(matchstr(v:val, "\\d\\+"))') 
+    if bufwinnr(bufnum) != -1
+      cclose
+      return
+    endif
+  endfor
+
+  let winnr = winnr()
+  copen 10
+  if winnr() != winnr
+    wincmd p
+  endif
+endfunction
+
+function! ToggleErrors()
+    if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
+         " No location/quickfix list shown, open syntastic error location panel
+         Errors
+    else
+        lclose
+    endif
+endfunction
+
+function! DoMake()
+	if (&ft=='python')
+		echo "Syntanx check for Python"
+        :SyntasticCheck
+		:make!
+	else
+        :make!
+	endif
+
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" plugin 에 관련한 정의
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set rtp+=~/.vim/bundle/vundle
+
+call vundle#rc()
+"""""""""""""""""""""
+Plugin 'gmarik/vundle'
+
+"Plugin 'Chiel92/vim-autoformat'
+
+"Plugin 'indexer.tar.gz'
+"Plugin 'vimprj'
+"Plugin 'DfrankUtil'
+Plugin 'The-NERD-tree'
+"Plugin 'francoiscabrol/ranger.vim'
+Plugin 'git://github.com/klen/python-mode.git'
+"Plugin 'scrooloose/syntastic'
+"
+Plugin 'hashivim/vim-terraform'
+
+Plugin 'fatih/vim-go'
+"Plugin 'Valloric/YouCompleteMe'
+
+" for PlantUml
+"Plugin 'scrooloose/vim-slumlord'
+"Plugin 'weirongxu/plantuml-previewer.vim'
+
+
+"
+"
+":BundleSearch
+":BundleInstall
+":BundleClean
+
+"""""""""""""""""""""
+call vundle#end()            " required
+
+let g:vundle#lazy_load = 1
+
+" 행추가시 // 가 있는경우 자동으로 추가 되는 현상 방지
+"filetype plugin indent on    " required
+
+" for javascript
+"set g:js_indent=~/.vim/indent/javascript.vim
+"set g:js_indent_log=1 "logging off
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:indexer_disableCtagsWarning=1
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Python-mode
+" Activate rope
+" Keys:
+" K             Show python docs
+" <Ctrl-Space>  Rope autocomplete
+" <Ctrl-c>g     Rope goto definition
+" <Ctrl-c>d     Rope show documentation
+" <Ctrl-c>f     Rope find occurrences
+" <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
+" [[            Jump on previous class or function (normal, visual, operator modes)
+" ]]            Jump on next class or function (normal, visual, operator modes)
+" [M            Jump on previous class or method (normal, visual, operator modes)
+" ]M            Jump on next class or method (normal, visual, operator modes)
+"
+
+
+function! PymodeSetup()
+
+	let g:pymode = 1
+	"let g:pymode_rope = 1
+
+	" Documentation
+	let g:pymode_doc = 0
+	let g:pymode_doc_key = 'K'
+
+	"Linting
+	"let g:pymode_lint = 1
+	let g:pymode_lint = 0
+	"
+	"Values may be chosen from: `pylint`, `pep8`, `mccabe`, `pep257`, `pyflakes`.
+	"let g:pymode_lint_checker = "pylint,pyflakes,pep8,mmcabe,pep257"
+	let g:pymode_lint_checker = "pyflakes,pep8,mmcabe,pep257"
+	" Auto check on save
+	let g:pymode_lint_write = 1
+	"let g:pymode_lint_message = 1
+
+	" Support virtualenv
+	let g:pymode_virtualenv = 1
+
+	" Enable breakpoints plugin
+	let g:pymode_breakpoint = 1
+	let g:pymode_breakpoint_bind = '<leader>b'
+
+	" syntax highlighting
+	let g:pymode_syntax = 1
+	let g:pymode_syntax_all = 1
+	let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+	let g:pymode_syntax_space_errors = g:pymode_syntax_all
+	let g:pymode_syntax_highlight_equal_operator = g:pymode_syntax_all
+
+	" Don't autofold code
+	let g:pymode_folding = 0
+
+	"let g:pep8_ignore="E501,W601,W0611"
+	"let g:pep8_ignore="E501,W0611"
+	let g:pymode_lint_ignore="E501,W0611,E265,W0612,E266,E303,W602,E129,W0401"
+	"let g:pymode_lint_ignore="E501,W0611,E265,E129,E266"
+
+	"let g:pymode_options_max_line_length=80
+	let g:pymode_options_max_line_length=0
+
+	let g:pymode_trim_whitespaces = 1 
+
+	let g:pymode_indent = 1
+	let g:pymode_lint_on_fly     = 0
+
+	let g:pymode_lint_sort = ['E', 'C', 'I']
+
+	"let g:pymode_rope_goto_definition_bind = "<C-]>"
+
+	" do not open document window
+	set completeopt=menu
+endfunction
+call PymodeSetup()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" for syntastic 
+
+function! SyntasticSetup()
+	set statusline+=%#warningmsg#
+	set statusline+=%{SyntasticStatuslineFlag()}
+	set statusline+=%*
+
+	" enable/disable syntastic: SyntasticToggleMode<CR>
+	" run syntastic: SyntasticCheck<CR>
+	" let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+	" for GO
+	"let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
+	let g:syntastic_go_checkers = ['govet', 'errcheck', 'go']
+
+	let g:syntastic_python_checkers = ['pylint']
+	"let g:syntastic_python_checkers = ['flake8']
+
+	let g:syntastic_always_populate_loc_list = 1
+	let g:syntastic_auto_loc_list = 1
+	let g:syntastic_check_on_open = 0
+	let g:syntastic_check_on_wq = 0
+	let g:syntastic_loc_list_height=5
+
+	" close error window: SyntasticReset
+
+	"let g:syntastic_quiet_messages = {'level': 'warning'}
+	"let g:syntastic_enable_signs = 1
+	let g:syntastic_enable_highlighting = 0
+	let g:syntastic_python_pylint_args = '--disable=C0111,R0903,R0201,C0103,C0325,W0611,R0902,R0913,E0704,C0301,R0204,R0914,W0703,E1121,W0511,C0330,W0613,R0904,R0912,E1136,W0612,W0107'
+	"let g:syntastic_python_pylint_args_after = '-f text --msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg} {msg_id}" -r n'
+	"
+endfunction
+"call SyntasticSetup()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" for GO
+" :GoInstallBinaries
+" :GoUpdateBinaries
+function! VimGoSetup()
+  "set updatetime=100
+  "set re=1
+  "set nocursorcolumn
+  "set ttyfast
+  "set lazyredraw
+
+
+  "syntax sync minlines=256
+ 
+  "let mapleader = ","
+
+  " vim-go related mappings
+  "au FileType go nmap <Leader>r <Plug>(go-run)
+  "au FileType go nmap <Leader>b <Plug>(go-build)
+  "au FileType go nmap <Leader>t <Plug>(go-test)
+  "au FileType go nmap <Leader>i <Plug>(go-info)
+  "au FileType go nmap <Leader>s <Plug>(go-implements)
+  "au FileType go nmap ,i <Plug>(go-implements)
+  "au FileType go nmap <C-p> <Plug>(go-implements)
+  "au FileType go nmap <Leader>c <Plug>(go-coverage)
+  "au FileType go nmap <Leader>e <Plug>(go-rename)
+  "au FileType go nmap <Leader>gi <Plug>(go-imports)
+  "au FileType go nmap <Leader>gI <Plug>(go-install)
+  "au FileType go nmap <Leader>gd <Plug>(go-doc)
+  "au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+  "au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+  "au FileType go nmap <Leader>ds <Plug>(go-def-split)
+  "au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+  "au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+
+  let g:go_list_type = "quickfix"
+  let g:go_addtags_transform = "camelcase"
+  "let g:go_autodetect_gopath = 1
+  "let g:go_auto_sameids = 1
+  ""let g:go_auto_type_info = 1
+
+  " Use new vim 8.2 popup windows for Go Doc
+  let g:go_doc_popup_window = 1
+
+  "let g:go_fmt_command = "gofmt"
+  "let g:go_fmt_command = "goimports"
+  
+  " auto import, default enabled
+  "let g:go_fmt_autosave = 0
+
+  let g:go_fmt_experimental = 1
+  let g:go_dispatch_enabled = 0 " vim-dispatch needed
+  let g:go_metalinter_autosave = 0
+  let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+  let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+
+  let g:go_term_enabled = 0
+  let g:go_term_mode = "vertical"
+
+  "let g:go_def_mapping_enabled = 1
+
+  let g:go_highlight_types = 1
+  let g:go_highlight_fields = 1
+  let g:go_highlight_function_calls = 1
+  let g:go_highlight_generate_tags = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_operators = 1
+  let g:go_highlight_extra_types = 1
+  let g:go_highlight_build_constraints = 1
+  let g:go_highlight_chan_whitespace_error = 1
+  let g:go_highlight_functions = 1
+  let g:go_highlight_function_parameters = 1
+  let g:go_highlight_structs = 1
+  let g:go_highlight_interfaces = 1
+  let g:go_highlight_variable_assignments = 1
+  let g:go_highlight_variable_declarations = 1
+
+  let g:go_code_completion_enabled = 1
+
+  " 검증 되지 않은 것들 
+  let g:go_highlight_string_spellcheck = 1
+  let g:go_highlight_format_strings = 1
+  let g:go_highlight_array_whitespace_error = 1
+
+
+  "let g:go_diagnostics_enabled = 1
+  let g:go_diagnostics_level = 2
+  let g:go_highlight_diagnostic_errors = 1
+  let g:go_highlight_diagnostic_warnings = 1
+
+  let g:go_fmt_fail_silently = 1
+
+  "let g:go_def_mode='godef' " gopls, godef, guru
+  "let g:go_def_mode='guru' " gopls, godef, guru
+  let g:go_def_mode='gopls' " gopls, godef, guru
+  let g:go_info_mode='gopls'
+  "let g:go_gopls_enabled = 0
+
+  "let g:go_guru_scope = ["github.com/cloud-pi/kraken"]
+  "
+  " let g:go_gopls_options = ['-remote=auto']
+  "let g:go_template_autocreate = 0
+  "let g:go_test_timeout= '1s'
+  "let g:go_test_show_name = 1
+
+  " for debugging
+  "let g:go_echo_command_info=1
+  "let g:go_debug=['shell-commands', 'debugger-commands']
+
+endfunction
+call VimGoSetup()
+
+function! RemoveVimSwapFile()
+	let _cmd_='rm -f /home/jiho.jung/.vimswp/*'
+	let _resp = system(_cmd_)
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+for include_file in uniq(sort(globpath(&rtp, 'vim-include/*.vim', 0, 1)))
+    execute "source " . include_file
+endfor
