@@ -72,4 +72,4 @@ function! PymodeSetup()
 	set completeopt=menu
 endfunction
 
-"call PymodeSetup()
+call PymodeSetup()
