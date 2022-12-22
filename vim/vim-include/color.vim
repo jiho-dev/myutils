@@ -7,6 +7,7 @@ set termencoding=utf-8
 """"""""""""""""
 set t_Co=256
 "set t_Co=16
+"set t_Co=8
 
 "if has("terminfo")
 	"set t_Co=8
@@ -70,8 +71,11 @@ function! MyColor()
 	"highlight	Error		ctermfg=1 cterm=bold
 	"highlight	PreCondit	ctermfg=6 cterm=bold
 	"
-	hi Keyword		ctermfg=7
-	hi Normal		ctermfg=7 cterm=NONE
+	hi Normal		ctermfg=NONE cterm=NONE
+	"hi Normal		ctermfg=7 cterm=NONE
+	hi Keyword		ctermfg=7 cterm=NONE
+	hi Identifier	ctermfg=14 cterm=NONE
+
 
 	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	" 현재 라인을 표시한다.
@@ -82,7 +86,7 @@ function! MyColor()
 	hi CursorLineNr term=reverse cterm=reverse ctermfg=DarkYellow gui=reverse guifg=Yellow
 	hi CursorLine term=NONE cterm=NONE 
 
-	hi WarningMsg term=standout ctermfg=LightRed guifg=Red
+	hi WarningMsg term=standout ctermfg=red guifg=red
 
 	" (), {} 매치
 	"hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
@@ -144,7 +148,7 @@ function! CColor()
 	"highlight	cIncluded	ctermfg=4
 	"highlight	cPreProc	ctermfg=7
 	"highlight	cPreCondit	ctermfg=1
-	"highlight	cDefine		ctermfg=orange
+	"highlight	cDefine		ctermfg=2
 endfunction
 
 function! HtmlColor()
@@ -217,63 +221,71 @@ function! DiffColor()
 endfunction
 
 function! CustomColorVim90()
-	hi Normal ctermfg=cyan ctermbg=NONE cterm=NONE
-	hi EndOfBuffer ctermfg=yellow ctermbg=NONE cterm=NONE
-	hi Terminal ctermfg=cyan ctermbg=NONE cterm=NONE
+	hi Normal ctermfg=cyan
+	hi EndOfBuffer ctermfg=yellow
+	hi Terminal ctermfg=cyan
 endfunction
 
 function! GolangColor()
 	hi goDiagnosticError ctermbg=magenta ctermfg=7*
 	hi goDiagnosticWarning ctermbg=white ctermfg=0
 
-	hi goReceiverVar ctermfg=green ctermbg=NONE cterm=NONE
-	hi goParamName ctermfg=green ctermbg=NONE cterm=NONE
-
 	" red
-	hi goVarDefs ctermfg=1 ctermbg=NONE cterm=NONE
-	hi goVarAssign ctermfg=1 ctermbg=NONE cterm=NONE
-	hi goSpecialString ctermfg=1 ctermbg=NONE cterm=NONE
+	hi goVarDefs ctermfg=1
+	hi goVarAssign ctermfg=1
+	hi goSpecialString ctermfg=1
 
-	hi goReceiverType ctermfg=yellow ctermbg=NONE cterm=NONE
-	hi goParamType ctermfg=yellow ctermbg=NONE cterm=NONE
-	hi goType ctermfg=yellow ctermbg=NONE cterm=NONE
-	hi goSignedInts ctermfg=yellow ctermbg=NONE cterm=NONE
-	hi goUnsignedInts ctermfg=yellow ctermbg=NONE cterm=NONE
-	hi goFloats ctermfg=yellow ctermbg=NONE cterm=NONE
-	hi goFloatsgoComplexes ctermfg=yellow ctermbg=NONE cterm=NONE
-	hi goBoolean ctermfg=yellow ctermbg=NONE cterm=NONE
-	hi goPredefinedIdentifiers ctermfg=yellow ctermbg=NONE cterm=NONE
+	hi goReceiverType ctermfg=yellow
+	hi goParamType ctermfg=yellow
+	hi goType ctermfg=yellow
+	hi goSignedInts ctermfg=yellow
+	hi goUnsignedInts ctermfg=yellow
+	hi goFloats ctermfg=yellow
+	hi goFloatsgoComplexes ctermfg=yellow
+	hi goBoolean ctermfg=yellow
+	hi goPredefinedIdentifiers ctermfg=yellow
 
 	" darkgreen
-	hi goFunction ctermfg=34 ctermbg=NONE cterm=NONE
-	hi goFunctionCall ctermfg=34 ctermbg=NONE cterm=NONE
-	hi goTypeName ctermfg=34 ctermbg=NONE cterm=NONE
-	hi Type ctermfg=34 ctermbg=NONE cterm=NONE
+	hi goFunction ctermfg=34
+	hi goFunctionCall ctermfg=34
+	hi goTypeName ctermfg=34
+	hi Type ctermfg=34
+	hi goReceiverVar ctermfg=34
+	hi goParamName ctermfg=34
 
-	hi Keyword ctermfg=blue ctermbg=NONE cterm=NONE
-	hi Statement ctermfg=blue ctermbg=NONE cterm=NONE
-	hi goConditional ctermfg=blue ctermbg=NONE cterm=NONE
-	hi goLabel ctermfg=blue ctermbg=NONE cterm=NONE
-	hi goRepeat ctermfg=blue ctermbg=NONE cterm=NONE
-	hi goVar ctermfg=blue ctermbg=NONE cterm=NONE
-	hi goBuiltins ctermfg=blue ctermbg=NONE cterm=NONE
+	hi Keyword ctermfg=blue
+	hi Statement ctermfg=blue
+	hi goPackage ctermfg=blue
+	hi goImport ctermfg=blue
+	hi goStatement ctermfg=blue
+	hi goConditional ctermfg=blue
+	hi goLabel ctermfg=blue
+	hi goRepeat ctermfg=blue
+	hi goVar ctermfg=blue
+	hi goBuiltins ctermfg=blue
 
 	" magenta
-	hi Special ctermfg=5 ctermbg=NONE cterm=NONE
-	hi String ctermfg=5 ctermbg=NONE cterm=NONE
+	hi Special ctermfg=5
+	hi String ctermfg=5
+	hi preproc ctermfg=5
 
 	" dark white
-	hi goField ctermfg=7 ctermbg=NONE cterm=NONE
+	hi goField ctermfg=7
 
 	" termporary to see each item
-	hi Identifier ctermfg=46 ctermbg=NONE cterm=NONE
-	"hi goOperator ctermfg=4 ctermbg=NONE cterm=NONE
-	"hi goFunctionReturn ctermfg=5 ctermbg=NONE cterm=NONE
-	"hi goSimpleParams ctermfg=5 ctermbg=NONE cterm=NONE
+	"hi Identifier ctermfg=46
+	"hi goOperator ctermfg=4
+	"hi goFunctionReturn ctermfg=5
+	"hi goSimpleParams ctermfg=5
 endfunction
+
+" to show current color of groups
+" run this it 
+" :so $VIMRUNTIME/syntax/hitest.vim
 
 augroup MyCustomColors
     autocmd!
+
     autocmd ColorScheme * call MyColor()
     autocmd ColorScheme * call MakefileColor()
     autocmd ColorScheme * call CColor()
@@ -285,4 +297,6 @@ augroup MyCustomColors
     "autocmd ColorScheme * call DiffColor()
 augroup END
 
+"colorschem ron
 colorschem ron-jiho
+"colorschem default
