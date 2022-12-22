@@ -71,10 +71,14 @@ function! MyColor()
 	"highlight	Error		ctermfg=1 cterm=bold
 	"highlight	PreCondit	ctermfg=6 cterm=bold
 	"
-	hi Normal		ctermfg=NONE cterm=NONE
-	"hi Normal		ctermfg=7 cterm=NONE
-	hi Keyword		ctermfg=7 cterm=NONE
+	hi Normal		ctermfg=7 cterm=NONE
 	hi Identifier	ctermfg=14 cterm=NONE
+	hi Keyword		ctermfg=blue
+	hi Statement	ctermfg=blue
+	hi String		ctermfg=5
+	hi Type			ctermfg=34
+	hi Special		ctermfg=34
+	hi preproc		ctermfg=34
 
 
 	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -249,12 +253,9 @@ function! GolangColor()
 	hi goFunction ctermfg=34
 	hi goFunctionCall ctermfg=34
 	hi goTypeName ctermfg=34
-	hi Type ctermfg=34
 	hi goReceiverVar ctermfg=34
 	hi goParamName ctermfg=34
 
-	hi Keyword ctermfg=blue
-	hi Statement ctermfg=blue
 	hi goPackage ctermfg=blue
 	hi goImport ctermfg=blue
 	hi goStatement ctermfg=blue
@@ -263,11 +264,6 @@ function! GolangColor()
 	hi goRepeat ctermfg=blue
 	hi goVar ctermfg=blue
 	hi goBuiltins ctermfg=blue
-
-	" magenta
-	hi Special ctermfg=5
-	hi String ctermfg=5
-	hi preproc ctermfg=5
 
 	" dark white
 	hi goField ctermfg=7
@@ -279,9 +275,11 @@ function! GolangColor()
 	"hi goSimpleParams ctermfg=5
 endfunction
 
+""""""""""""""""""""""""""
 " to show current color of groups
 " run this it 
 " :so $VIMRUNTIME/syntax/hitest.vim
+""""""""""""""""""""""""""
 
 augroup MyCustomColors
     autocmd!
