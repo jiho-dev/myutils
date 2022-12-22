@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# awsp: autocompletion aws profile
+
+function awsp(){
+  if [ "$#" -eq 1 ] ; then
+	export AWS_PROFILE=${1}
+  else 
+	  echo "AWS_PROFILE=$AWS_PROFILE"
+  fi
+}
+
+_awsp_completion()
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts=`(grep '\[profile' ~/.aws/config  | cut -d ' ' -f 2 | cut -d ']' -f 1)`
+
+    if [[ ${cur} == * ]] ; then
+        COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+        return 0
+    fi
+} && complete -F _awsp_completion awsp
+
