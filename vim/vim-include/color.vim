@@ -71,14 +71,15 @@ function! MyColor()
 	"highlight	Error		ctermfg=1 cterm=bold
 	"highlight	PreCondit	ctermfg=6 cterm=bold
 	"
-	hi Normal		ctermfg=7 cterm=NONE
 	hi Identifier	ctermfg=14 cterm=NONE
 	hi Keyword		ctermfg=blue
 	hi Statement	ctermfg=blue
 	hi String		ctermfg=5
 	hi Type			ctermfg=34
-	hi Special		ctermfg=34
-	hi preproc		ctermfg=34
+
+	hi Normal		ctermfg=7 cterm=NONE
+	hi Special		ctermfg=7
+	hi preproc		ctermfg=7
 
 
 	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

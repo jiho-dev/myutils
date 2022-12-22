@@ -76,6 +76,10 @@ syntax on
 
 " 마우스 사용을 활성화 한다.
 "set mouse=an
+" disable double-click
+":map <2-LeftMouse> <Nop>
+":map! <2-LeftMouse> <Nop>
+
 
 " disable autofold
 set nofoldenable
