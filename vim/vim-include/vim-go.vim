@@ -75,6 +75,9 @@ function! VimGoSetup()
   let g:go_highlight_variable_assignments = 1
   let g:go_highlight_variable_declarations = 1
 
+  let g:go_highlight_extra_types = 1
+  let g:go_highlight_build_constraints = 1
+
   let g:go_code_completion_enabled = 1
 
   " 검증 되지 않은 것들 

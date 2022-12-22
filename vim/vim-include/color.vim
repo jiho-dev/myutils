@@ -5,8 +5,8 @@ set termencoding=utf-8
 """"""""""""""""
 "  xterm-256
 """"""""""""""""
-" set t_Co=256
-set t_Co=16
+set t_Co=256
+"set t_Co=16
 
 "if has("terminfo")
 	"set t_Co=8
@@ -61,7 +61,7 @@ function! MyColor()
 	"	Normal Tag
 	"
 	highlight   Search 		ctermfg=0 ctermbg=7 
-	highlight	Comment		ctermfg=6
+	highlight	Comment		ctermfg=6 ctermbg=NONE
 	"highlight	Include		ctermfg=6 cterm=bold
 	"highlight	Statement	ctermfg=3
 	"highlight	String		ctermfg=3
@@ -70,6 +70,8 @@ function! MyColor()
 	"highlight	Error		ctermfg=1 cterm=bold
 	"highlight	PreCondit	ctermfg=6 cterm=bold
 	"
+	hi Keyword		ctermfg=7
+	hi Normal		ctermfg=7 cterm=NONE
 
 	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	" 현재 라인을 표시한다.
@@ -87,11 +89,6 @@ function! MyColor()
 	hi MatchParen cterm=NONE ctermbg=red ctermfg=white
 
 	"highlight BadWhitespace ctermbg=red guibg=#d70000
-
-	" for GO
-	hi goDiagnosticError ctermbg=5 ctermfg=7*
-	hi goDiagnosticWarning ctermbg=7 ctermfg=0
-
 endfunction
 
 function! MakefileColor()
@@ -225,11 +222,62 @@ function! CustomColorVim90()
 	hi Terminal ctermfg=cyan ctermbg=NONE cterm=NONE
 endfunction
 
+function! GolangColor()
+	hi goDiagnosticError ctermbg=magenta ctermfg=7*
+	hi goDiagnosticWarning ctermbg=white ctermfg=0
+
+	hi goReceiverVar ctermfg=green ctermbg=NONE cterm=NONE
+	hi goParamName ctermfg=green ctermbg=NONE cterm=NONE
+
+	" red
+	hi goVarDefs ctermfg=1 ctermbg=NONE cterm=NONE
+	hi goVarAssign ctermfg=1 ctermbg=NONE cterm=NONE
+	hi goSpecialString ctermfg=1 ctermbg=NONE cterm=NONE
+
+	hi goReceiverType ctermfg=yellow ctermbg=NONE cterm=NONE
+	hi goParamType ctermfg=yellow ctermbg=NONE cterm=NONE
+	hi goType ctermfg=yellow ctermbg=NONE cterm=NONE
+	hi goSignedInts ctermfg=yellow ctermbg=NONE cterm=NONE
+	hi goUnsignedInts ctermfg=yellow ctermbg=NONE cterm=NONE
+	hi goFloats ctermfg=yellow ctermbg=NONE cterm=NONE
+	hi goFloatsgoComplexes ctermfg=yellow ctermbg=NONE cterm=NONE
+	hi goBoolean ctermfg=yellow ctermbg=NONE cterm=NONE
+	hi goPredefinedIdentifiers ctermfg=yellow ctermbg=NONE cterm=NONE
+
+	" darkgreen
+	hi goFunction ctermfg=34 ctermbg=NONE cterm=NONE
+	hi goFunctionCall ctermfg=34 ctermbg=NONE cterm=NONE
+	hi goTypeName ctermfg=34 ctermbg=NONE cterm=NONE
+	hi Type ctermfg=34 ctermbg=NONE cterm=NONE
+
+	hi Keyword ctermfg=blue ctermbg=NONE cterm=NONE
+	hi Statement ctermfg=blue ctermbg=NONE cterm=NONE
+	hi goConditional ctermfg=blue ctermbg=NONE cterm=NONE
+	hi goLabel ctermfg=blue ctermbg=NONE cterm=NONE
+	hi goRepeat ctermfg=blue ctermbg=NONE cterm=NONE
+	hi goVar ctermfg=blue ctermbg=NONE cterm=NONE
+	hi goBuiltins ctermfg=blue ctermbg=NONE cterm=NONE
+
+	" magenta
+	hi Special ctermfg=5 ctermbg=NONE cterm=NONE
+	hi String ctermfg=5 ctermbg=NONE cterm=NONE
+
+	" dark white
+	hi goField ctermfg=7 ctermbg=NONE cterm=NONE
+
+	" termporary to see each item
+	hi Identifier ctermfg=46 ctermbg=NONE cterm=NONE
+	"hi goOperator ctermfg=4 ctermbg=NONE cterm=NONE
+	"hi goFunctionReturn ctermfg=5 ctermbg=NONE cterm=NONE
+	"hi goSimpleParams ctermfg=5 ctermbg=NONE cterm=NONE
+endfunction
+
 augroup MyCustomColors
     autocmd!
     autocmd ColorScheme * call MyColor()
     autocmd ColorScheme * call MakefileColor()
     autocmd ColorScheme * call CColor()
+    autocmd ColorScheme * call GolangColor()
 
 	"autocmd ColorScheme * call CustomColorVim90()
     "autocmd ColorScheme * call HtmlColor()
