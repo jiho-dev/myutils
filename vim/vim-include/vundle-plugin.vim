@@ -12,9 +12,9 @@ Plugin 'gmarik/vundle'
 "Plugin 'indexer.tar.gz'
 "Plugin 'vimprj'
 "Plugin 'DfrankUtil'
-Plugin 'The-NERD-tree'
+"Plugin 'The-NERD-tree'
 "Plugin 'francoiscabrol/ranger.vim'
-Plugin 'git://github.com/klen/python-mode.git'
+"Plugin 'git://github.com/klen/python-mode.git'
 "Plugin 'scrooloose/syntastic'
 "
 Plugin 'hashivim/vim-terraform'
@@ -32,6 +32,8 @@ Plugin 'fatih/vim-go'
 ":BundleSearch
 ":BundleInstall
 ":BundleClean
+":GoInstallBinaries
+":GoUpdateBinaries
 
 """""""""""""""""""""
 call vundle#end()            " required
