@@ -2,8 +2,13 @@
 "" DO NOT edit .vimrc
 "" instead, Use ~/.vim/vim-include 
 """""""""""""""""""""""""""""""""""""""""""
-
+" base include
 for include_file in uniq(sort(globpath(&rtp, 'vim-include/*.vim', 0, 1)))
+    execute "source " . include_file
+endfor
+
+" custom include
+for include_file in uniq(sort(globpath(&rtp, 'custom-include/*.vim', 0, 1)))
     execute "source " . include_file
 endfor
 
