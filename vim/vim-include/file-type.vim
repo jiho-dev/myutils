@@ -1,6 +1,7 @@
 
 filetype on
 filetype indent on
+filetype plugin on
 
 " for css
 "filetype plugin indent on

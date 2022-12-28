@@ -80,6 +80,7 @@ function! MyColor()
 	hi Normal		ctermfg=7 cterm=NONE
 	hi Special		ctermfg=7
 	hi preproc		ctermfg=7
+	hi Directory	ctermfg=6
 
 
 	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
