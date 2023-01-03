@@ -19,6 +19,7 @@ Plugin 'gmarik/vundle'
 "
 Plugin 'hashivim/vim-terraform'
 
+" use v1.28: git checkout tags/v1.28 -b tag-v1.28
 Plugin 'fatih/vim-go'
 "Plugin 'Valloric/YouCompleteMe'
 
