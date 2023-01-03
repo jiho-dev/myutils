@@ -70,7 +70,9 @@ function! MyColor()
 	"highlight	Function	cterm=bold
 	"highlight	Error		ctermfg=1 cterm=bold
 	"highlight	PreCondit	ctermfg=6 cterm=bold
+	"hi preproc		ctermfg=7
 	"
+	
 	hi Identifier	ctermfg=14 cterm=NONE
 	hi Keyword		ctermfg=blue
 	hi Statement	ctermfg=blue
@@ -79,9 +81,7 @@ function! MyColor()
 
 	hi Normal		ctermfg=7 cterm=NONE
 	hi Special		ctermfg=7
-	hi preproc		ctermfg=7
 	hi Directory	ctermfg=6
-
 
 	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	" 현재 라인을 표시한다.
@@ -152,7 +152,7 @@ function! CColor()
 	"highlight	cCommentError	ctermfg=7
 	highlight	cInclude	ctermfg=2
 	"highlight	cIncluded	ctermfg=4
-	"highlight	cPreProc	ctermfg=7
+	highlight	cPreProc	ctermfg=7
 	"highlight	cPreCondit	ctermfg=1
 	"highlight	cDefine		ctermfg=2
 endfunction
@@ -277,6 +277,16 @@ function! GolangColor()
 	"hi goSimpleParams ctermfg=5
 endfunction
 
+function! ShellColor()
+	hi shShellVariables ctermfg=34
+	hi shDeref ctermfg=34
+	hi shDerefVar ctermfg=34
+	hi shDerefSpecial ctermfg=34
+	hi shDerefSimple ctermfg=34
+	hi PreProc ctermfg=34
+	hi shFunction ctermfg=blue
+endfunction
+
 """"""""""""""""""""""""""
 " to show current color of groups
 " run this it 
@@ -290,6 +300,7 @@ augroup MyCustomColors
     autocmd ColorScheme * call MakefileColor()
     autocmd ColorScheme * call CColor()
     autocmd ColorScheme * call GolangColor()
+    autocmd ColorScheme * call ShellColor()
 
 	"autocmd ColorScheme * call CustomColorVim90()
     "autocmd ColorScheme * call HtmlColor()
