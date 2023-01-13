@@ -18,6 +18,7 @@ Plugin 'gmarik/vundle'
 "Plugin 'scrooloose/syntastic'
 "
 Plugin 'hashivim/vim-terraform'
+Plugin 'jvirtanen/vim-hcl'
 
 " use v1.28: git checkout tags/v1.28 -b tag-v1.28
 Plugin 'fatih/vim-go'

@@ -49,6 +49,9 @@ map 	<F6> 	[i
 "map 	<F9> 	:q!<CR>
 "imap 	<F9> 	<C-O>:q!<CR>
 
+map 	<F9> 	:GoRename 
+imap 	<F9> 	<C-O>:GoRename 
+
 " [중요] : screen에서 사용하기 위해 F10~F12는 남겨 놓는다.
 " 정의는 .screenrc에 있음.
 "map 	<F10>
