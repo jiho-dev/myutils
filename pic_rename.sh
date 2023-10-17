@@ -292,7 +292,7 @@ collect_orient() {
 #	7: 270
 #	8: 270
 
-adjust_orient() {
+adjust_orient_old() {
 	local cur_dir=$1
 	local files=`cd $cur_dir; ls ./*.[jJ]* 2>/dev/null`
 	local fcnt=$(cd $cur_dir; ls ./*.[Jj]* 2>/dev/null | wc -l)
@@ -326,6 +326,10 @@ adjust_orient() {
 		mogrify -rotate $rotate $f
 		${exif_cmd} -Orientation=1 -n -overwrite_original ./$f
 	done
+}
+
+adjust_orient() {
+	 mogrify -verbose -auto-orient $1
 }
 
 
@@ -362,4 +366,5 @@ adjust_orient() {
 
 
 # 핸드폰 사진 회전이 안 맞을때..
-adjust_orient ./202310_newyork
+#adjust_orient_old ./202310_newyork
+#adjust_orient ./202310_newyork
