@@ -27,6 +27,10 @@ Plugin 'fatih/vim-go'
 " for PlantUml
 "Plugin 'scrooloose/vim-slumlord'
 "Plugin 'weirongxu/plantuml-previewer.vim'
+"
+"
+Plugin 'sheerun/vim-polyglot'
+
 
 
 "

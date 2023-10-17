@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+
+#### install and use it
+# 1. copy the scripts in your home: ~/bin/
+#    -. completion-krakenhost
+# 2. set the prefix of aws adminprofile in completion-adminvpc:  
+#       admin_prefix="admin-"
+# 3. add lines in .bashrc :
+#   if [ -f ~/bin/completion-adminvpc ]; then
+#	   source ~/bin/completion-adminvpc
+#   fi
+# 4. re-login ssh
+# 5. at the first time, run adminvpc <aws_profile> generate-action-list
+# 6. type 'adminvpc' and press TAB key to see what you have to select 
+
+region_list="dev2 stg2 ppd2 spc-eu spc-kr spc-sg spc-us"
+server_type="blackpearl vrouter"
+
+function kraken_rpc(){
+  if [ "$#" -eq 3 ] ; then
+	  ip=$(echo $3 | cut -d ":" -f 1)
+	  if [ "$1" == "blackpearl" ]; then
+		export BLACKPEARL_RPC_ADDR=$ip
+	  elif [ "$1" == "vrouter" ]; then
+		export VROUTER_RPC_ADDR=$ip
+	  fi
+  elif [ "$#" -eq 2 ] ; then
+	  ip=$(echo $2 | cut -d ":" -f 1)
+	  if [ "$1" == "blackpearl" ]; then
+		export BLACKPEARL_RPC_ADDR=$ip
+	  elif [ "$1" == "vrouter" ]; then
+		export VROUTER_RPC_ADDR=$ip
+	  fi
+  fi
+
+  echo "VROUTER_RPC_ADDR=$VROUTER_RPC_ADDR"
+  echo "BLACKPEARL_RPC_ADDR=$BLACKPEARL_RPC_ADDR"
+}
+
+get_host_list() {
+	local region=$1
+	local host_type=$2
+
+	mapfile -t < ~/.ssh/sss-host.cfg
+
+	for line in "${MAPFILE[@]}"; do
+		cols=(${line})
+		if [ "${cols[0]}" == "#" ]; then
+			continue
+		elif [ ${#cols[@]} -lt 1 ]; then
+			continue
+		elif [ "${cols[0]}" != "$region" ]; then
+			continue
+		elif [ "${cols[1]}" != "$host_type" ]; then
+			continue
+		fi
+
+		#echo "${cols[2]}:${cols[3]}"
+		echo "${cols[3]}:${cols[2]}"
+	done
+}
+
+function _set_kraken_rpc() {
+	local cur list var
+
+    cur=${COMP_WORDS[COMP_CWORD]}
+    list=""
+
+	if [ ${COMP_CWORD} == 1 ]; then
+		list="$server_type"
+	elif [ ${COMP_CWORD} == 2 ]; then
+		list=$region_list
+	elif [ ${COMP_CWORD} == 3 ]; then
+		host_type="${COMP_WORDS[1]}"
+		region="${COMP_WORDS[2]}"
+		list=$(get_host_list $region $host_type)
+	fi
+
+    COMPREPLY=( $(compgen -W "${list}" -- "$cur" ) )
+}
+
+complete -F _set_kraken_rpc kraken_rpc
+

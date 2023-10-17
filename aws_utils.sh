@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#set -x
+
 #
 # CMD_VERBOSE=0: turn off actual aws cmd
 #
@@ -165,5 +167,15 @@ aws-update-api-json() {
 	/bin/cp -f models/apis/ec2/2016-11-15/api-2.json ~/.aws/models/ec2/2016-11-15/service-2.json
 
 	popd
+}
+
+aws-show-eval () {
+	local st=$1
+
+	if [ -n "$st" ]; then
+		aws ec2 describe-vpc-evaluator  | jq -r ".NatGatewayStatus.NatGatewayHealth[] | select(.InstanceState.HealthState == \"${st}\")"
+	else
+		aws ec2 describe-vpc-evaluator | jq -r '.NatGatewayStatus.NatGatewayHealth[]'
+	fi
 }
 

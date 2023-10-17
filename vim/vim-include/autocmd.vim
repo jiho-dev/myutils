@@ -66,3 +66,5 @@ au BufEnter *.conf set expandtab
 " jQuery syntax
 "au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 "au BufRead,BufNewFile *.js set filetype=javascript
+
+au BufNewFile,BufRead Jenkinsfile* setf groovy

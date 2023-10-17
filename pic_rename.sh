@@ -17,26 +17,27 @@
 # │   └── DSC_1441.JPG
 '
 
+exif_cmd=/home/jiho.jung/img/exiftool
 
 #rm *.jpg -f
 #rm *.JPG -f
 #cp ./org/* .
 #rm -f new/*
 
-#exiftool '-filename<CreateDate' -d %y%m%d_%H%M%S%%-c.%%le -r -ext cr2 -ext mrw /media/ingest/test
-#exiftool '-filename<CreateDate' -d %Y%m%d_%H%M%S%%-c.%%le -ext jpg . 
+#${exif_cmd} '-filename<CreateDate' -d %y%m%d_%H%M%S%%-c.%%le -r -ext cr2 -ext mrw /media/ingest/test
+#${exif_cmd} '-filename<CreateDate' -d %Y%m%d_%H%M%S%%-c.%%le -ext jpg . 
 
-#exiftool -v '-filename<CreateDate' -d %Y%m%d_%H%M%S%%+c.%%le -ext jpg . 
+#${exif_cmd} -v '-filename<CreateDate' -d %Y%m%d_%H%M%S%%+c.%%le -ext jpg . 
 
-#exiftool -v -ext jpg "-filename<${datetimeoriginal}${SubSecCreateDate}0.%e" -d %Y%m%d_%H%M%S  .
+#${exif_cmd} -v -ext jpg "-filename<${datetimeoriginal}${SubSecCreateDate}0.%e" -d %Y%m%d_%H%M%S  .
 
-#exiftool 20150513_194948.jpg -EXIF:SubSecTime
-#exiftool -ext jpg -t  -n -s2 -EXIF:SubSecTime ./DSC_3034_2.JPG
-#exiftool -t  -n -s2 -EXIF:SubSecTime ./1441061910693.jpg
-#exiftool "-DateTimeOriginal-=0:0:0 1:0:0"
-#exiftool "-filemodifydate<${datetimeoriginal;s/(\d{4}):00:00/$1:01:01/}"
-#exiftool -AllDates+=1:30 -if '$make eq "Canon"' dir
-#exiftool -modifydate+=3 a.jpg b.jpg
+#${exif_cmd} 20150513_194948.jpg -EXIF:SubSecTime
+#${exif_cmd} -ext jpg -t  -n -s2 -EXIF:SubSecTime ./DSC_3034_2.JPG
+#${exif_cmd} -t  -n -s2 -EXIF:SubSecTime ./1441061910693.jpg
+#${exif_cmd} "-DateTimeOriginal-=0:0:0 1:0:0"
+#${exif_cmd} "-filemodifydate<${datetimeoriginal;s/(\d{4}):00:00/$1:01:01/}"
+#${exif_cmd} -AllDates+=1:30 -if '$make eq "Canon"' dir
+#${exif_cmd} -modifydate+=3 a.jpg b.jpg
 
 #######################
 
@@ -46,7 +47,7 @@ set_modify_time() {
 	local filename=${f//\'/} # remove ' mark in the string
 
 	if [ -e $filename ]; then
-		exiftool '-filemodifydate<DateTimeOriginal' -d %Y%m%d_%H%M%S $filename
+		${exif_cmd} '-filemodifydate<DateTimeOriginal' -d %Y%m%d_%H%M%S $filename
 	else
 		echo "no file: $filename"
 	fi
@@ -61,7 +62,7 @@ apply_new_name() {
 
 	# 20160903_0520_hyojin_36_0000.jpg
 	# 20160903_0819_jiho_22_0000.jpg
-	msg="$(exiftool '-filename<CreateDate' -d %Y%m%d_%H%M_${author}_${sec}_${usec}%%+c.%%le -v -o ./$new_dir $filename)"
+	msg="$(${exif_cmd} '-filename<CreateDate' -d %Y%m%d_%H%M_${author}_${sec}_${usec}%%+c.%%le -v -o ./$new_dir $filename)"
 
 	echo "$msg"
 
@@ -91,8 +92,8 @@ rename_pic() {
 		local usec
 		local sec
 
-		sec=$(exiftool -t -s2 -EXIF:CreateDate -d %S $ofile)
-		usec=$(exiftool -t  -n -s2 -EXIF:SubSecTime $ofile)
+		sec=$(${exif_cmd} -t -s2 -EXIF:CreateDate -d %S $ofile)
+		usec=$(${exif_cmd} -t  -n -s2 -EXIF:SubSecTime $ofile)
 		usec=$(expr $usec + 0)
 		usec=$(printf "%04d" $usec)
 
@@ -120,7 +121,7 @@ check_subsec() {
 		local f=${cur_dir}/$(basename $i)
 		local usec
 
-		usec=$(exiftool -t  -n -s2 -EXIF:SubSecTime ${f})
+		usec=$(${exif_cmd} -t  -n -s2 -EXIF:SubSecTime ${f})
 		if [ -z $usec ]; then
 			echo "No usec: ${f}"
 		fi
@@ -139,7 +140,7 @@ set_subsectime() {
 		local f=$(basename $i)
 		local ofile="$cur_dir/$f"
 
-		exiftool -SubSecTime=001 -overwrite_original -v $ofile
+		${exif_cmd} -SubSecTime=123 -overwrite_original -v $ofile
 	done
 }
 
@@ -180,12 +181,12 @@ rename_pic_without_usec() {
 		local usec
 		local f=$(basename $i)
 		local ofile="$cur_dir/$f"
-		local cdate=$(exiftool -t -s2 -EXIF:CreateDate -d %Y%m%d_%H%M%S $ofile)
+		local cdate=$(${exif_cmd} -t -s2 -EXIF:CreateDate -d %Y%m%d_%H%M%S $ofile)
 
 		usec=$(find_next_usec $new_dir $cdate)
 		usec=$(printf "%04d" $usec)
 
-		sec=$(exiftool -t -s2 -EXIF:CreateDate -d %S $ofile)
+		sec=$(${exif_cmd} -t -s2 -EXIF:CreateDate -d %S $ofile)
 
 		apply_new_name $ofile $new_dir $cur_dir $sec $usec
 	done
@@ -248,19 +249,107 @@ remove_word() {
 adjust_modify_time()
 {
 	local filename=$1
-	local adj_time="0:0:0 0:0:3"
+	#local adj_time="0:0:0 0:0:3"
+	# 15 시간 이동
+	local adj_time="0:0:0 15:0:0"
 
-	exiftool "-FileModifyDate+=$adj_time" "-AllDates+=$adj_time" -overwrite_original  $filename
+	${exif_cmd} "-FileModifyDate-=$adj_time" "-AllDates-=$adj_time" -overwrite_original  $filename
+	#${exif_cmd} "-AllDates-=$adj_time" -overwrite_original  $filename
+	#${exif_cmd} "-AllDates-=$adj_time"  -overwrite_original $filename
+	#${exif_cmd} "-FileModifyDate<EXIF:DateTimeOriginal" -overwrite_original $filename
 }
+
+show_orient() {
+	#${exif_cmd}  -p '$Filename $orientation' -n ./*.JPG
+	${exif_cmd}  -p '$orientation' -n $1
+}
+
+collect_orient() {
+	out_fname=orient_junho.txt
+	out_fname1=orient_junho_sort.txt
+	${exif_cmd}  -p '$Filename $orientation' -n ./junho/*.JPG > ./$out_fname
+	sort -k2 $out_fname  | uniq -c -f 1 > ${out_fname1}
+}
+
+#	From exiftool documentation
+#	https://sirv.com/help/articles/rotate-photos-to-be-upright/
+#
+#	1 = Horizontal (normal)
+#	2 = Mirror horizontal
+#	3 = Rotate 180
+#	4 = Mirror vertical
+#	5 = Mirror horizontal and rotate 270 CW
+#	6 = Rotate 90 CW
+#	7 = Mirror horizontal and rotate 90 CW
+#	8 = Rotate 270 CW
+
+#	1: skip
+#	2: skip
+#	3: 180
+#	4: 180, 셀카
+#	5: 90, 셀카
+#	6: 90
+#	7: 270
+#	8: 270
+
+adjust_orient() {
+	local cur_dir=$1
+	local files=`cd $cur_dir; ls ./*.[jJ]* 2>/dev/null`
+	local fcnt=$(cd $cur_dir; ls ./*.[Jj]* 2>/dev/null | wc -l)
+	local i
+	local cnt=1
+	local f
+
+	for i in $files; do
+		f=${cur_dir}/$i
+
+		ori=$(show_orient $f)
+		case "$ori" in
+		3|4)
+			rotate=180
+			;;
+		5|6)
+			rotate=90
+			;;
+		7|8)
+			rotate=270
+			;;
+		*)
+			echo "Image Orientation: $f, $ori, skip"
+			continue
+			;;
+		esac
+
+		echo "Modify and reset orientation: $f, $rotate"
+
+		#mogrify -path ./${new_dir}/ -rotate $rotate $f
+		mogrify -rotate $rotate $f
+		${exif_cmd} -Orientation=1 -n -overwrite_original ./$f
+	done
+}
+
 
 ########################################
 #### main
 
-#check_subsec tmp
+# 이미지 시간 조정
+#adjust_modify_time "tmp_new/1.jpg"
+#adjust_modify_time "a6000/DSC030*"
+#adjust_modify_time "a6000/DSC031*"
+#adjust_modify_time "a6000/DSC032*"
+#adjust_modify_time "a6000/DSC0330*"
+#adjust_modify_time "a6000/DSC0331*"
+#adjust_modify_time "a6000/DSC0332*"
+#adjust_modify_time "a6000/DSC03330*"
+
+#check_subsec junho
 
 # 김효진폰은 subsec이 없어서 강제로 설정 한다.
 #set_subsectime hyojin
-#rename_pic_without_usec hyojin
+#set_subsectime a6000
+#rename_pic_without_usec a6000
+#rename_pic_without_usec jiho_mp4
+#rename_pic_without_usec junho
 
 
 #apply_author "d7000_new" "d7000"
@@ -268,10 +357,9 @@ adjust_modify_time()
 
 # 이미지 파일 이름을 촬영날짜로 변경하여 새로운 디렉토리에 복사한다.
 #rename_create_date d7000 jiho jihyun
-
-# 이미지 시간 조정
-#adjust_modify_time "tmp_new/1.jpg"
-
-rename_create_date d7000 jihyun
+#rename_create_date d7000 jihyun
+#rename_create_date jiho
 
 
+# 핸드폰 사진 회전이 안 맞을때..
+adjust_orient ./202310_newyork
