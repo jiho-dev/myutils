@@ -44,6 +44,8 @@ map 	<F6> 	[i
 
 "
 "map 	<F8>
+map <F8>    :call ToggleVimGoDiagnostics() <CR>
+imap <F8>   <C-O>:call ToggleVimGoDiagnostics() <CR>
 
 " 무조건 종료
 "map 	<F9> 	:q!<CR>

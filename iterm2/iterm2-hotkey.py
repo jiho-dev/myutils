@@ -76,11 +76,11 @@ async def main(connection):
         if not user_remote_hostname:
             return None, None
 
-        if "sss" in profile.command:
-            cmd = profile.command + " " +user_remote_hostname
+        if "teash" in profile.command:
+            cmd = profile.command + " --connect=" +user_remote_hostname
         else:
             # XXX: resolve path for sss
-            msg = "sss " + user_remote_hostname
+            msg = "teash --connect=" + user_remote_hostname
 
         return cmd, msg
 

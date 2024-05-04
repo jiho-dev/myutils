@@ -88,6 +88,7 @@ function! VimGoSetup()
 
   "let g:go_diagnostics_enabled = 1
   let g:go_diagnostics_level = 2
+  "let g:go_diagnostics_level = 0
   let g:go_highlight_diagnostic_errors = 1
   let g:go_highlight_diagnostic_warnings = 1
 
@@ -112,3 +113,12 @@ function! VimGoSetup()
 
 endfunction
 call VimGoSetup()
+
+function! ToggleVimGoDiagnostics()
+    if g:go_diagnostics_level == 0
+      let g:go_diagnostics_level = 2
+    else
+      let g:go_diagnostics_level = 0
+    endif
+endfunction
+
